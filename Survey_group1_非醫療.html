@@ -622,7 +622,9 @@ var _sheetUrl = ''; // filled by exportSurveyFile()
 let state={name:'',role:'',currentGroup:0,groups:[],responses:{},adminLinks:{}};
 
 function getGroups(){
-  var ag=EDIT_DATA||_bakedGroups||GROUPS;
+  // If dispatched survey (baked), return as-is (already filtered by admin)
+  if(_bakedGroups) return _bakedGroups;
+  var ag=EDIT_DATA||GROUPS;
   return ag.filter(function(g){return g.type===state.role;});
 }
 
