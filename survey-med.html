@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>癌症品質指標審查－醫療委員 第2組</title>
+<style>
+:root{
+  --teal:#006D77;--teal-dark:#004E56;--teal-light:#83C5BE;--teal-bg:#EDF6F7;
+  --gold:#C8963E;--gold-light:#F5DFB5;
+  --red:#C0392B;--red-light:#FDECEA;
+  --green:#1E7C5A;--green-light:#D4EDDA;
+  --gray:#6B7280;--gray-light:#F3F4F6;--border:#D1D5DB;
+  --text:#1F2937;--text-muted:#6B7280;--white:#FFFFFF;
+  --shadow:0 2px 12px rgba(0,0,0,.07);--radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;background:#F0F4F8;color:var(--text);font-size:16px;line-height:1.75}
+.page{display:none;min-height:100vh}.page.active{display:block}
+
+/* TOP BAR */
+.topbar{background:var(--teal-dark);color:#fff;padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:15px;font-weight:700;letter-spacing:.5px}
+.topbar-right{display:flex;align-items:center;gap:12px;font-size:13px}
+.badge{background:var(--gold);color:#fff;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.admin-link{color:var(--teal-light);cursor:pointer;font-size:12px;text-decoration:underline}
+
+/* PROGRESS */
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;position:sticky;top:54px;z-index:99}
+.progress-bar{height:100%;background:var(--gold);transition:width .4s ease}
+
+/* LANDING */
+.landing{max-width:480px;margin:0 auto;padding:50px 24px}
+.landing-logo{text-align:center;margin-bottom:32px}
+.landing-logo .hospital{font-size:13px;color:var(--text-muted);letter-spacing:2px;margin-bottom:6px}
+.landing-logo .title{font-size:26px;font-weight:800;color:var(--teal-dark);line-height:1.35}
+.landing-logo .subtitle{font-size:13px;color:var(--gray);margin-top:6px}
+.landing-card{background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 24px rgba(0,0,0,.1);border:1px solid var(--border)}
+.field-group{margin-bottom:20px}
+.field-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;display:block}
+.field-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:.2s}
+.field-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,109,119,.1)}
+.role-select{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.role-btn{border:2px solid var(--border);background:#fff;border-radius:10px;padding:16px 12px;cursor:pointer;text-align:center;transition:.2s}
+.role-btn:hover{border-color:var(--teal-light)}
+.role-btn.selected{border-color:var(--teal);background:var(--teal-bg)}
+.role-btn .role-icon{font-size:28px;margin-bottom:6px}
+.role-btn .role-name{font-size:14px;font-weight:700;color:var(--teal-dark)}
+.role-btn .role-desc{font-size:12px;color:var(--gray);margin-top:3px}
+.btn-start{width:100%;padding:14px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;font-family:inherit;letter-spacing:.5px;transition:.2s}
+.btn-start:hover{background:var(--teal-dark)}
+.btn-start:disabled{background:var(--gray);cursor:not-allowed}
+
+/* SECTION */
+.section-page{max-width:920px;margin:0 auto;padding:32px 24px 100px}
+.section-header{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:22px 26px;margin-bottom:24px;box-shadow:var(--shadow)}
+.section-tag{background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.5px}
+.section-title-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.section-name{font-size:20px;font-weight:800;color:var(--teal-dark)}
+.section-meta{font-size:12px;color:var(--gray);margin-top:2px}
+
+/* 5 STAT BOXES */
+.stat-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.stat-box{flex:1;min-width:110px;border-radius:10px;padding:14px 16px;border:1px solid var(--border)}
+.stat-box-val{font-size:26px;font-weight:800;line-height:1}
+.stat-box-label{font-size:12px;color:var(--text-muted);margin-top:5px;font-weight:500}
+.s-miss{background:#FEF2F2;border-color:#FBCBC8}.s-miss .stat-box-val{color:var(--red)}
+.s-down{background:#FFFBEB;border-color:#FDE68A}.s-down .stat-box-val{color:#B45309}
+.s-keep{background:var(--teal-bg);border-color:#B6DDE0}.s-keep .stat-box-val{color:var(--teal)}
+.s-up{background:var(--green-light);border-color:#A8D5BE}.s-up .stat-box-val{color:var(--green)}
+.s-basis{background:#F5F3FF;border-color:#C5B3F5}.s-basis .stat-box-val{color:#6D28D9;font-size:14px}
+
+/* INDICATOR CARD */
+.indicator-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;box-shadow:var(--shadow);overflow:hidden;transition:.25s}.indicator-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.indicator-card.completed{border-color:#86EFAC;background:#F0FDF4}
+.indicator-card.error-highlight .indicator-header{background:var(--red-light)!important}
+.indicator-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FAFCFC}
+.indicator-num{background:var(--teal);color:#fff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.3px}
+.indicator-name{font-size:16px;font-weight:700;color:var(--teal-dark);flex:1}
+.completed-badge{background:#22C55E;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:auto}
+
+/* STATS GRID */
+.indicator-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:16px 20px;background:#F8FAFC;border-bottom:1px solid var(--border)}
+.istat{background:#fff;border-radius:8px;padding:10px 14px;border:1px solid var(--border);transition:.15s}.istat:hover{border-color:var(--teal-light)}
+.istat-label{font-size:11px;color:var(--gray);font-weight:600;letter-spacing:.3px;margin-bottom:3px}
+.istat-val{font-size:15px;font-weight:700;color:var(--text)}
+.istat-val.red{color:#C0392B;font-weight:800}
+.istat-val.blue{color:#1A56DB;font-weight:800}.istat-val.down{color:#B45309}.istat-val.up{color:var(--green)}.istat-val.keep{color:var(--teal)}.istat-val.muted{font-size:11px;font-weight:400;color:var(--gray)}
+
+/* ANALYSIS */
+.analysis-section{padding:18px 22px;border-bottom:1px solid var(--border)}
+.analysis-title{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.analysis-text{font-size:15px;color:var(--text);line-height:1.8;background:#FFF8F8;border-left:4px solid var(--red);padding:14px 18px;border-radius:0 10px 10px 0}
+.year-tag{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-right:6px}
+
+/* VOTING */
+.voting-section{padding:20px 22px}
+.vote-block{margin-bottom:18px}
+.vote-question{font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px}
+.vote-options{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.vote-btn{display:flex;align-items:center;gap:8px;border:2px solid var(--border);background:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-size:15px;font-weight:700;font-family:inherit;transition:.2s;letter-spacing:.2px}
+.vote-btn:hover{background:var(--gray-light)}
+.vote-btn.agree.selected{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.vote-btn.disagree.selected{border-color:var(--red);background:var(--red-light);color:var(--red)}
+
+/* DISAGREE SUB-OPTIONS */
+.disagree-sub{display:none;background:#FFF5F5;border:1.5px solid #FBCBC8;border-radius:8px;padding:12px 14px;margin-top:8px}
+.disagree-sub.show{display:block}
+.disagree-sub-label{font-size:12px;color:var(--red);font-weight:700;margin-bottom:8px}
+.sub-options{display:flex;flex-direction:column;gap:6px}
+.sub-opt{display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 10px;border-radius:6px;border:1.5px solid transparent;font-size:14px;background:#fff;transition:.2s;font-family:inherit;text-align:left;width:100%}
+.sub-opt:hover{border-color:#FBCBC8;background:#FEF2F2}
+.sub-opt.selected{border-color:var(--red);background:var(--red-light);color:var(--red);font-weight:700}
+.sub-opt-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--border);flex-shrink:0}
+.sub-opt.selected .sub-opt-dot{border-color:var(--red);background:var(--red)}
+.sub-other-input{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;margin-top:6px}
+.sub-other-input:focus{border-color:var(--red)}
+
+/* COMMENT */
+.vote-comment label{font-size:12px;font-weight:600;color:var(--gray);display:block;margin-bottom:5px}
+.vote-comment textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:15px;font-family:inherit;outline:none;resize:vertical;min-height:64px;transition:.2s}
+.vote-comment textarea:focus{border-color:var(--teal)}
+
+/* NAV */
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--teal-light);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;z-index:99;box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+.nav-info{font-size:13px;color:var(--gray)}
+.nav-btn-group{display:flex;gap:10px}
+.btn{padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:.2s}
+.btn-outline{background:#fff;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-dark)}
+
+/* VALIDATION */
+.validation-alert{background:var(--red-light);border:1.5px solid #FBCBC8;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--red);margin-bottom:16px;display:none}
+.validation-alert.show{display:flex;align-items:center;gap:8px}
+
+/* THANK YOU */
+.thankyou{max-width:520px;margin:80px auto;padding:24px;text-align:center}
+.thankyou-icon{font-size:64px;margin-bottom:20px}
+
+
+
+@media(max-width:600px){
+  .stat-row{gap:6px}.stat-box{min-width:90px;padding:8px 10px}
+  .indicator-stats{grid-template-columns:repeat(2,1fr)}
+  .nav-footer{padding:10px 14px}
+  .btn{padding:8px 14px;font-size:13px}
+  .vote-options{flex-direction:column}
+}
+</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ═══ PAGE: LANDING ═══ -->
+<div id="page-landing" class="page active">
+  <div class="landing">
+    <div class="landing-logo">
+      <div class="hospital">TMU-SHH 雙和醫院</div>
+      <div class="title">癌症品質指標<br>委員審查系統</div>
+      <div class="subtitle">醫療委員 第2組｜114年執行成果 &amp; 115年閾值審查</div>
+    </div>
+    <div class="landing-card">
+      <div style="background:var(--teal-bg);border:1.5px solid var(--teal-light);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
+        <span style="font-size:28px">🏥</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--teal-dark)">醫療委員 第2組</div>
+          <div style="font-size:12px;color:var(--gray);margin-top:2px">診斷期 → 完治率｜共8個功能小組</div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">委員姓名 <span style="color:var(--red)">*</span></label>
+        <select id="input-name" class="field-input" onchange="onNameChange()">
+          <option value="">— 請選擇姓名 —</option>
+          <option value="李明哲">李明哲</option>
+          <option value="張宜崴">張宜崴</option>
+          <option value="林哲銘">林哲銘</option>
+          <option value="楊哲銘">楊哲銘</option>
+          <option value="馮博皓">馮博皓</option>
+          <option value="沈宛真">沈宛真</option>
+          <option value="宋睿祥">宋睿祥</option>
+          <option value="劉惠文">劉惠文</option>
+          <option value="溫國璋">溫國璋</option>
+          <option value="蔡若婷">蔡若婷</option>
+          <option value="蔡易傑">蔡易傑</option>
+          <option value="李秋桂">李秋桂</option>
+          <option value="李國隆">李國隆</option>
+          <option value="李明憲">李明憲</option>
+          <option value="徐嘉鴻">徐嘉鴻</option>
+          <option value="哈多吉">哈多吉</option>
+          <option value="李文生">李文生</option>
+          <option value="趙祖怡">趙祖怡</option>
+        </select>
+      </div>
+      <button class="btn-start" id="btn-start" onclick="startSurvey()" disabled>開始填寫 →</button>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: SURVEY ═══ -->
+<div id="page-survey" class="page">
+  <div class="topbar">
+    <div class="topbar-title">癌症品質指標審查｜醫療委員 第2組</div>
+    <div id="autosave-indicator" style="color:#83C5BE;font-size:12px;opacity:0;transition:opacity .5s">✓ 已自動存取</div>
+    <div class="topbar-right">
+      <span id="user-badge" class="badge">委員</span>
+      <span id="survey-progress-text" style="font-size:13px">0/0 項</span>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div id="survey-body"></div>
+  <div class="nav-footer">
+    <div class="nav-info" id="nav-info">第 1 頁 / 共 X 頁</div>
+    <div class="nav-btn-group">
+      <button class="btn btn-outline" id="btn-prev" onclick="navigate(-1)">← 上一組</button>
+      <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">下一組 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: THANK YOU ═══ -->
+<div id="page-thanks" class="page">
+  <div class="thankyou">
+    <div class="thankyou-icon">✅</div>
+    <h2 style="color:var(--teal-dark)">審查指標內容已提交</h2>
+    <p style="color:var(--gray);margin-top:8px">感謝您完成審查，意見已彙整至系統。</p>
+    <p style="color:var(--teal-dark);font-weight:600;margin-top:16px" id="submit-confirm"></p>
+    <button class="btn btn-outline" style="margin-top:24px" onclick="location.reload()">返回首頁</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DISAGREE REASON OPTIONS
+// ══════════════════════════════════════════════════════
+const DISAGREE_ANALY = [
+  '原因分析不完整，尚有其他因素未納入',
+  '改善措施執行力不足，需強化落實機制',
+  '需加強追蹤與回饋機制，確認改善成效',
+];
+const DISAGREE_THRESH = [
+  '建議維持原閾值，不應下修',
+  '下修幅度不足，建議進一步調降',
+  '閾值設定依據需補充說明或佐證資料',
+];
+
+// ══════════════════════════════════════════════════════
+// THRESHOLD CODES
+// ══════════════════════════════════════════════════════
+const TB = {A:'參考國內外文獻或學會指引',B:'參考同儕醫院平均值或國健署核心指標',C:'院內過去3年平均值',D:'認證基準或法規強制要求'};
+const AR = {A:'連續達標具正向改善趨勢',B:'流程已標準化/e化完成',C:'治療指引或政策變動',D:'已調且達標不調整',E:'未達閾值但無結構性問題',F:'病人安全不適合調整',G:'疫情或非長期影響因素',H:'分母數偏少或年度波動大',I:'高齡/共病/拒治/中斷治療',J:'指引政策策略變動',K:'連續負向趨勢',L:'其他'};
+
+// ══════════════════════════════════════════════════════
+// DATA — 15 GROUPS WITH 113/114 FRACTIONS
+// ══════════════════════════════════════════════════════
+const GROUPS = [{id:'q1',name:'Q1 抗癌藥物安全組',type:'non-medical',total:20,missed:0,lowered:0,maintained:20,raised:0,basis:'C',indicators:[{id:'q1-1',no:'1',cancer:'肺癌',name:'化學治療處方遵循率－肺癌',attr:'正',change:'',t112:'85%',r112:'91%',frac112:'115/126',t113:'92%',r113:'92%',frac113:'121/132',t114:'92%',r114:'88%',frac114:'133/151',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'劑量9件：皆為病人高齡或體質虛弱，故選用較低劑量。 藥品組合9件：病人因素，依照文獻選用其他療效較佳之regimen'},{id:'q1-2',no:'2',cancer:'乳癌',name:'化學治療處方遵循率－乳癌',attr:'正',change:'',t112:'90%',r112:'97%',frac112:'215/221',t113:'95%',r113:'96%',frac113:'179/187',t114:'95%',r114:'90%',frac114:'191/202',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-3',no:'3',cancer:'結直腸癌',name:'化學治療處方遵循率－結直腸癌',attr:'正',change:'',t112:'90%',r112:'91%',frac112:'101/101',t113:'93%',r113:'93%',frac113:'104/112',t114:'93%',r114:'86%',frac114:'125/129',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-4',no:'4',cancer:'頭頸癌 (含口腔、下咽、喉)',name:'化學治療處方遵循率－頭頸癌 (含口腔、下咽、喉)',attr:'正',change:'114年新增',t112:'90%',r112:'93%',frac112:'64/64',t113:'92%',r113:'98%',frac113:'40/41',t114:'93%',r114:'87%',frac114:'14/16',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'劑量3件：病人體質虛弱，故選用較低劑量 藥品組合3件：一筆依據文獻施打，後續新增修訂2026指引 一筆病人體質虛弱，故選用副作用較輕微之regimen 一筆因病人拒絕針劑化療，改以口服治療'},{id:'q1-5',no:'5',cancer:'鼻咽癌',name:'化學治療處方遵循率－鼻咽癌',attr:'正',change:'',t112:'90%',r112:'90%',frac112:'18/18',t113:'92%',r113:'100%',frac113:'11/11',t114:'93%',r114:'84%',frac114:'37/43',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'劑量1件：因病人無法耐受副作用故後續僅RT 藥品組合1件：病人體質虛弱，故選用副作用較輕微之regimen'},{id:'q1-6',no:'6',cancer:'子宮體癌',name:'化學治療處方遵循率－子宮體癌',attr:'正',change:'',t112:'85%',r112:'83%',frac112:'5/5',t113:'85%',r113:'86%',frac113:'6/7',t114:'85%',r114:'99%',frac114:'12/13',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-7',no:'7',cancer:'子宮頸癌',name:'化學治療處方遵循率－子宮頸癌',attr:'正',change:'',t112:'85%',r112:'56%',frac112:'5/5',t113:'85%',r113:'100%',frac113:'4/4',t114:'85%',r114:'86%',frac114:'10/10',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-8',no:'8',cancer:'卵巢癌',name:'化學治療處方遵循率－卵巢癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'22/22',t113:'96%',r113:'86%',frac113:'6/7',t114:'85%',r114:'90%',frac114:'16/17',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-9',no:'9',cancer:'淋巴癌',name:'化學治療處方遵循率－淋巴癌',attr:'正',change:'',t112:'80%',r112:'73%',frac112:'19/19',t113:'80%',r113:'88%',frac113:'15/17',t114:'87%',r114:'52%',frac114:'29/32',missed:'',t115:'87%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-10',no:'10',cancer:'膀胱癌',name:'化學治療處方遵循率－膀胱癌',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'24/24',t113:'95%',r113:'100%',frac113:'31/31',t114:'95%',r114:'40%',frac114:'34/34',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-11',no:'11',cancer:'攝護腺癌',name:'化學治療處方遵循率－攝護腺癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'42/42',t113:'85%',r113:'95%',frac113:'81/85',t114:'85%',r114:'50%',frac114:'88/89',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-12',no:'12',cancer:'肝癌',name:'化學治療處方遵循率－肝癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'27/27',t113:'98%',r113:'100%',frac113:'12/12',t114:'90%',r114:'90%',frac114:'17/17',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-13',no:'13',cancer:'胃癌',name:'化學治療處方遵循率－胃癌',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'25/25',t113:'93%',r113:'90%',frac113:'19/21',t114:'93%',r114:'80%',frac114:'27/32',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'劑量2件：病人體質虛弱 (91y/o、共病多)，故使用較低劑量 藥品組合2件：因無法耐受副作用，故停止施打化療'},{id:'q1-14',no:'14',cancer:'食道癌',name:'化學治療處方遵循率－食道癌',attr:'正',change:'114年新增',t112:'85%',r112:'95%',frac112:'19/19',t113:'97%',r113:'91%',frac113:'20/22',t114:'95%',r114:'50%',frac114:'18/22',missed:'',t115:'89%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'劑量1件：病人體質虛弱 (ICU)，故使用較低劑量 藥品組合1件：病人體質虛弱 (91y/o)，故僅使用Immunotherapy 療程數2件：一筆依據文獻施打，後續新增修訂2026指引 一筆因時程安排，只來得及打1次化療'},{id:'q1-15',no:'15',cancer:'化療處方跡近錯誤率 (near miss)',name:'化學治療異常事件－化療處方跡近錯誤率 (near miss)',attr:'負',change:'',t112:'',r112:'',frac112:'',t113:'50%',r113:'53%',frac113:'104/19852',t114:'50%',r114:'60%',frac114:'102/20828',missed:'',t115:'0.5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-16',no:'16',cancer:'調劑異常(near miss)',name:'化學治療異常事件－調劑異常(near miss)',attr:'負',change:'',t112:'0%',r112:'0%',frac112:'',t113:'0%',r113:'0%',frac113:'0/19852',t114:'0%',r114:'80%',frac114:'1/20828',missed:'',t115:'0%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'一件途徑調劑錯誤，加強備藥及調劑標籤標示。'},{id:'q1-17',no:'17',cancer:'調劑異常(miss)',name:'化學治療異常事件－調劑異常(miss)',attr:'負',change:'',t112:'0%',r112:'0%',frac112:'',t113:'0%',r113:'1%',frac113:'1/19852',t114:'0%',r114:'90%',frac114:'',missed:'',t115:'0%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'一件扣錯點滴，加強右上點滴重量級扣標示。 一件因資訊異常調劑錯誤，已修正bug。'},{id:'q1-18',no:'18',cancer:'化療藥物給藥異常',name:'化學治療異常事件－化療藥物給藥異常',attr:'負',change:'',t112:'0%',r112:'0%',frac112:'',t113:'0%',r113:'0%',frac113:'0/19852',t114:'0%',r114:'95%',frac114:'0/20828',missed:'',t115:'0%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已達閾值'},{id:'q1-19',no:'19',cancer:'化療藥物外滲',name:'化學治療異常事件－化療藥物外滲',attr:'負',change:'',t112:'0%',r112:'4%',frac112:'7/7',t113:'0%',r113:'1%',frac113:'2/19852',t114:'0%',r114:'92%',frac114:'5/20828',missed:'',t115:'0%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'皆與人工血管（Port-A）相關5件1.角針長度或角度不適當及Port-A角度歪斜困難放置 1-1建立角針選擇標準化流程 1-2放置後標準流程：反抽確認及旋轉同側手臂再測試是否回血 1-3新進人員化療訓練完成率100% 2.病人姿勢移動或拉扯管路 2-1強化病人衛教與即時回報機制 2-2衛教病人三大症狀要立即通知：刺痛、灼熱、腫脹 3.給藥過程監測頻率不足 3-1給藥監測時間標準化 3-2建立監測節點：給藥前確認回血、給藥後30分鐘評估、每更換藥物前再確認'},{id:'q1-20',no:'20',cancer:'化療藥物潑灑',name:'化學治療異常事件－化療藥物潑灑',attr:'負',change:'',t112:'0%',r112:'2%',frac112:'4/4',t113:'0%',r113:'3%',frac113:'6/19852',t114:'0%',r114:'0%',frac114:'3/20828',missed:'',t115:'0%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'人員操作因素2件 1提前開啟Infusor接頭（未確認螺旋式接頭）1-1明確規範「接上前才可開啟Infusor」 1-2晨會案例宣導與情境模擬教育 2Pump set排氣方式錯誤（Milking造成接頭脫落）2-1禁止milking排氣，改採「回彈、回推」方式 2-2強化排氣標準：氣室需擠壓1/2以上 2-3技能訓練影片再教育 病人因素1件 3病人自拔管路（誤認為藥物已施打完成）3-1請門診醫師評估是否適合居家化療 3-2針對高齡或認知功能下降病人建立篩選機制 3-3強化居家infusor衛教，返家前由護理師口頭回覆確認'}]},{id:'q2',name:'Q2 護理品質監測',type:'non-medical',total:4,missed:0,lowered:0,maintained:4,raised:0,basis:'C',indicators:[{id:'q2-1',no:'1',cancer:'',name:'晚期緩和醫療照護收案數 (共85人次)',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'7%',r114:'100%',frac114:'',missed:'',t115:'20%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q2-2',no:'2',cancer:'',name:'癌症疼痛評估及處置正確率',attr:'正',change:'',t112:'94%',r112:'94%',frac112:'294/314',t113:'94%',r113:'94.6%',frac113:'',t114:'94%',r114:'94.2%',frac114:'',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q2-3',no:'3',cancer:'',name:'化學治療藥物副作用衛教紀錄完整性',attr:'正',change:'',t112:'95%',r112:'95%',frac112:'695/735',t113:'95%',r113:'95.5%',frac113:'',t114:'95%',r114:'97%',frac114:'',missed:'',t115:'97%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q2-4',no:'4',cancer:'',name:'教育訓練 (場)',attr:'正',change:'',t112:'12%',r112:'12%',frac112:'',t113:'100%',r113:'12%',frac113:'',t114:'12%',r114:'12%',frac114:'',missed:'',t115:'12%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q3',name:'Q3 病理品質提升組',type:'non-medical',total:4,missed:0,lowered:0,maintained:4,raised:0,basis:'C',indicators:[{id:'q3-1',no:'1',cancer:'',name:'初次癌登同儕複閱機制-複閱率',attr:'正',change:'',t112:'98%',r112:'100%',frac112:'',t113:'98%',r113:'100%',frac113:'',t114:'98%',r114:'99.9%',frac114:'',missed:'',t115:'99%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q3-2',no:'2',cancer:'',name:'癌症病理報告格式品質監測-繕寫完整度',attr:'正',change:'',t112:'95%',r112:'99.9%',frac112:'',t113:'97%',r113:'99%',frac113:'',t114:'97%',r114:'98.7%',frac114:'',missed:'',t115:'97%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q3-3',no:'3',cancer:'',name:'臨床與病理回饋機制',attr:'正',change:'',t112:'(無)個案分析',r112:'30%',frac112:'',t113:'(無)個案分析',r113:'18%',frac113:'',t114:'(無)個案分析',r114:'20%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q3-4',no:'4',cancer:'',name:'委外諮詢/疑義個案',attr:'正',change:'',t112:'(無)個案分析',r112:'6%',frac112:'',t113:'(無)個案分析',r113:'9%',frac113:'',t114:'(無)個案分析',r114:'3%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q4',name:'Q4 影像診斷品質提升組',type:'non-medical',total:20,missed:0,lowered:0,maintained:20,raised:0,basis:'C',indicators:[{id:'q4-1',no:'1',cancer:'鼻咽癌',name:'初始套用率－鼻咽癌',attr:'正',change:'',t112:'95%',r112:'95.2%',frac112:'20/21',t113:'95%',r113:'87.5%',frac113:'',t114:'90%',r114:'90.9%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-2',no:'2',cancer:'食道癌',name:'初始套用率－食道癌',attr:'正',change:'',t112:'85%',r112:'93.3%',frac112:'28/30',t113:'85%',r113:'96.7%',frac113:'',t114:'85%',r114:'87.2%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-3',no:'3',cancer:'肺癌',name:'初始套用率－肺癌',attr:'正',change:'',t112:'85%',r112:'77.5%',frac112:'169/218',t113:'85%',r113:'80.5%',frac113:'',t114:'85%',r114:'85.9%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-4',no:'4',cancer:'攝護腺癌',name:'初始套用率－攝護腺癌',attr:'正',change:'',t112:'85%',r112:'89.1%',frac112:'114/128',t113:'85%',r113:'87.1%',frac113:'',t114:'85%',r114:'85.2%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-5',no:'5',cancer:'子宮頸癌',name:'初始套用率－子宮頸癌',attr:'正',change:'',t112:'85%',r112:'92.3%',frac112:'12/13',t113:'85%',r113:'82.4%',frac113:'',t114:'85%',r114:'93.3%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-6',no:'6',cancer:'結直腸癌',name:'初始套用率－結直腸癌',attr:'正',change:'',t112:'90%',r112:'89.3%',frac112:'203/228',t113:'90%',r113:'85.6%',frac113:'',t114:'90%',r114:'92.5%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-7',no:'7',cancer:'胃癌',name:'初始套用率－胃癌',attr:'正',change:'',t112:'70%',r112:'88.4%',frac112:'38/43',t113:'70%',r113:'86.3%',frac113:'',t114:'80%',r114:'80.3%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'期間跨及AJCC 8th改版至9th版，持續人員教育'},{id:'q4-8',no:'8',cancer:'肝癌',name:'初始套用率－肝癌',attr:'正',change:'',t112:'80%',r112:'88.2%',frac112:'60/68',t113:'80%',r113:'89.2%',frac113:'',t114:'85%',r114:'95.7%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-9',no:'9',cancer:'口腔癌',name:'初始套用率－口腔癌',attr:'正',change:'',t112:'95%',r112:'95%',frac112:'57/60',t113:'95%',r113:'94%',frac113:'',t114:'95%',r114:'96.9%',frac114:'',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-10',no:'10',cancer:'胰臟癌',name:'初始套用率－胰臟癌',attr:'正',change:'',t112:'80%',r112:'75.6%',frac112:'34/45',t113:'80%',r113:'96.6%',frac113:'',t114:'85%',r114:'86.2%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-11',no:'11',cancer:'腎細胞癌',name:'初始套用率－腎細胞癌',attr:'正',change:'',t112:'80%',r112:'84.6%',frac112:'22/26',t113:'80%',r113:'71.4%',frac113:'',t114:'80%',r114:'79.5%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1.持續宣導同仁鼓勵套用 2.病人腎功能不佳，導致單憑不打顯影劑的影像不足判斷'},{id:'q4-12',no:'12',cancer:'卵巢癌',name:'初始套用率－卵巢癌',attr:'正',change:'',t112:'70%',r112:'76.8%',frac112:'13/17',t113:'70%',r113:'76.5%',frac113:'',t114:'70%',r114:'72.7%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'持續宣導同仁鼓勵套用'},{id:'q4-13',no:'13',cancer:'膀胱癌',name:'初始套用率－膀胱癌',attr:'正',change:'',t112:'70%',r112:'62.9%',frac112:'34/54',t113:'70%',r113:'72.5%',frac113:'',t114:'70%',r114:'71.4%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1.持續宣導同仁鼓勵套用 2.病人腎功能不佳，導致單憑不打顯影劑的影像不足判斷'},{id:'q4-14',no:'14',cancer:'子宮內膜癌',name:'初始套用率－子宮內膜癌',attr:'正',change:'',t112:'70%',r112:'88.9%',frac112:'32/36',t113:'70%',r113:'86.1%',frac113:'',t114:'70%',r114:'77.1%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'持續宣導同仁鼓勵套用'},{id:'q4-15',no:'15',cancer:'口咽癌',name:'初始套用率－口咽癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'17/17',t113:'95%',r113:'95%',frac113:'',t114:'95%',r114:'85.2%',frac114:'',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'持續宣導同仁鼓勵套用'},{id:'q4-16',no:'16',cancer:'下咽癌',name:'初始套用率－下咽癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'16/16',t113:'95%',r113:'93.3%',frac113:'',t114:'95%',r114:'92.3%',frac114:'',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'持續宣導同仁鼓勵套用'},{id:'q4-17',no:'17',cancer:'喉癌',name:'初始套用率－喉癌',attr:'正',change:'',t112:'95%',r112:'90%',frac112:'9/10',t113:'95%',r113:'91.7%',frac113:'',t114:'95%',r114:'92.3%',frac114:'',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'持續宣導同仁鼓勵套用'},{id:'q4-18',no:'18',cancer:'膽道癌',name:'初始套用率－膽道癌',attr:'正',change:'',t112:'80%',r112:'76.5%',frac112:'13/17',t113:'80%',r113:'69.6%',frac113:'',t114:'80%',r114:'84.8%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q4-19',no:'19',cancer:'腸胃道間質瘤',name:'初始套用率－腸胃道間質瘤',attr:'正',change:'',t112:'70%',r112:'75%',frac112:'6/8',t113:'70%',r113:'57.9%',frac113:'',t114:'70%',r114:'78.6%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1.持續宣導同仁鼓勵套用 2.期間跨及AJCC 8th改版 至9th版，持續人員教育'},{id:'q4-20',no:'20',cancer:'骨肉瘤',name:'初始套用率－骨肉瘤',attr:'正',change:'',t112:'85%',r112:'-',frac112:'',t113:'85%',r113:'-',frac113:'',t114:'85%',r114:'0%',frac114:'',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'114年只有一例'}]},{id:'q5',name:'Q5 放腫治療品質提升組',type:'non-medical',total:18,missed:0,lowered:0,maintained:18,raised:0,basis:'C',indicators:[{id:'q5-1',no:'1',cancer:'',name:'放射線治療依標準指引執行率 (以治癒性為目的)',attr:'正',change:'',t112:'95%',r112:'98.5%',frac112:'456/456',t113:'95%',r113:'99.8%',frac113:'399/400',t114:'98%',r114:'',frac114:'425/426',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-2',no:'2',cancer:'',name:'總劑量遵循率',attr:'正',change:'',t112:'90%',r112:'97.4%',frac112:'418/418',t113:'90%',r113:'98.6%',frac113:'348/353',t114:'95%',r114:'',frac114:'407/411',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-3',no:'3',cancer:'',name:'總治療時間',attr:'正',change:'',t112:'90%',r112:'92.1%',frac112:'417/417',t113:'90%',r113:'94.6%',frac113:'334/353',t114:'90%',r114:'',frac114:'391/411',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-4',no:'4',cancer:'',name:'次數遵循率',attr:'正',change:'',t112:'90%',r112:'97.4%',frac112:'407/418',t113:'90%',r113:'98.6%',frac113:'348/353',t114:'95%',r114:'',frac114:'407/411',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-5',no:'5',cancer:'',name:'放射線治療新病人評估記錄完成率',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'779/779',t113:'100%',r113:'100%',frac113:'777/777',t114:'100%',r114:'',frac114:'858/858',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-6',no:'6',cancer:'',name:'放射治療摘要報告完成率',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'809/809',t113:'100%',r113:'100%',frac113:'763/763',t114:'100%',r114:'',frac114:'900/900',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-7',no:'7',cancer:'',name:'副作用追蹤紀錄完成率',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'809/809',t113:'100%',r113:'100%',frac113:'763/763',t114:'100%',r114:'',frac114:'900/900',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-8',no:'8',cancer:'',name:'放射線治療新病人評估記錄',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'146/146',t113:'95%',r113:'100%',frac113:'152/152',t114:'97%',r114:'',frac114:'178/178',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-9',no:'9',cancer:'',name:'放射治療摘要報告正確率',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'146/146',t113:'95%',r113:'99.3%',frac113:'152/152',t114:'97%',r114:'',frac114:'177/178',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-10',no:'10',cancer:'',name:'針對當月所有放射線治療中病人，監測放射腫瘤科主治醫師於第一次治療時，執行治療部位驗證之確認並簽章負責',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'809/809',t113:'100%',r113:'100%',frac113:'763/763',t114:'100%',r114:'',frac114:'900/900',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-11',no:'11',cancer:'',name:'放射線治療中定位正確率',attr:'正',change:'',t112:'90%',r112:'97.7%',frac112:'687/703',t113:'92%',r113:'97.4%',frac113:'554/569',t114:'95%',r114:'',frac114:'735/752',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-12',no:'12',cancer:'',name:'放射線治療計劃治療前檢核完整率',attr:'正',change:'',t112:'90%',r112:'94.6%',frac112:'1202/1270',t113:'92%',r113:'96%',frac113:'1167/1215',t114:'94%',r114:'',frac114:'1272/1334',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-13',no:'13',cancer:'',name:'電腦治療計畫腫瘤劑量包覆率',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'90%',r113:'93.3%',frac113:'224/240',t114:'90%',r114:'',frac114:'297/304',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-14',no:'14',cancer:'',name:'放射線治療電腦計劃覆核完整率',attr:'正',change:'',t112:'90%',r112:'96.6%',frac112:'1349/1396',t113:'90%',r113:'97.6%',frac113:'1279/1311',t114:'95%',r114:'',frac114:'1496/1541',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-15',no:'15',cancer:'',name:'護理介入後降低乳癌放射線治療皮膚反應之嚴重度-Gr2(季)',attr:'負',change:'',t112:'10%',r112:'1%',frac112:'3/188',t113:'10%',r113:'1.1%',frac113:'2/179',t114:'5%',r114:'',frac114:'6/176',missed:'',t115:'5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-16',no:'16',cancer:'',name:'護理介入後降低乳癌放射線治療皮膚反應之嚴重度-Gr3(季)',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/188',t113:'3%',r113:'0%',frac113:'0/179',t114:'3%',r114:'',frac114:'0/176',missed:'',t115:'5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-17',no:'17',cancer:'',name:'射治療流程及衛教滿意度',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'85%',r113:'98.1%',frac113:'',t114:'90%',r114:'',frac114:'',missed:'',t115:'4.5',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q5-18',no:'18',cancer:'',name:'放射治療個案追蹤率 (治療結束1M)',attr:'正',change:'',t112:'95%',r112:'99.3%',frac112:'803/809',t113:'97%',r113:'99.6%',frac113:'760/763',t114:'98%',r114:'',frac114:'895/900',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q6',name:'Q6 社區篩檢發展推動組',type:'non-medical',total:13,missed:0,lowered:0,maintained:13,raised:0,basis:'C',indicators:[{id:'q6-1',no:'1',cancer:'',name:'完成國健署訂定之子宮頸癌篩檢量',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'100%',r114:'101.3%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-2',no:'2',cancer:'',name:'完成國健署訂定之乳癌篩檢量',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'100%',r114:'153.2%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-3',no:'3',cancer:'',name:'完成國健署訂定之大腸癌篩檢量',attr:'正',change:'',t112:'100%',r112:'196.5%',frac112:'',t113:'100%',r113:'187.6%',frac113:'',t114:'100%',r114:'93%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-4',no:'4',cancer:'',name:'完成國健署訂定之肺癌篩檢量',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'100%',r113:'115.3%',frac113:'',t114:'100%',r114:'163.3%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-5',no:'5',cancer:'',name:'提高社區篩檢人數 (人次)',attr:'正',change:'',t112:'40000',r112:'56173',frac112:'',t113:'40,00',r113:'57061',frac113:'',t114:'45000',r114:'57804',frac114:'',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-6',no:'6',cancer:'',name:'大腸癌篩檢優化上傳時效性(平均天數)',attr:'負',change:'',t112:'21%',r112:'14.3%',frac112:'',t113:'7%',r113:'80%',frac113:'',t114:'7%',r114:'4.3%',frac114:'',missed:'',t115:'7',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-7',no:'7',cancer:'',name:'乳癌篩檢優化上傳時效性(平均天數)',attr:'負',change:'',t112:'21%',r112:'7.4%',frac112:'',t113:'14%',r113:'8.4%',frac113:'',t114:'14%',r114:'10.2%',frac114:'',missed:'',t115:'14',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-8',no:'8',cancer:'',name:'子宮頸癌篩檢優化上傳時效性(平均天數)',attr:'負',change:'',t112:'21%',r112:'22.7%',frac112:'',t113:'14%',r113:'12.7%',frac113:'',t114:'14%',r114:'10.7%',frac114:'',missed:'',t115:'14',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-9',no:'9',cancer:'',name:'肺癌篩檢優化上傳時效性(平均天數)',attr:'負',change:'',t112:'',r112:'',frac112:'',t113:'10%',r113:'5.8%',frac113:'',t114:'10%',r114:'10%',frac114:'',missed:'',t115:'10',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-10',no:'10',cancer:'',name:'大腸癌篩檢家族史及吸菸習慣資料填報率須達85%',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'85%',r113:'99.5%',frac113:'',t114:'90%',r114:'98.5%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-11',no:'11',cancer:'',name:'肺癌篩檢院內篩檢率-重度吸菸者',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'50%',r113:'73.3%',frac113:'',t114:'60%',r114:'73.8%',frac114:'',missed:'',t115:'60%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-12',no:'12',cancer:'',name:'肺癌篩檢院內篩檢率-肺癌家族史',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'50%',r113:'81%',frac113:'',t114:'60%',r114:'100%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q6-13',no:'13',cancer:'',name:'提供婦癌身心障礙者篩檢服務',attr:'正',change:'',t112:'1%',r112:'4.4%',frac112:'',t113:'1%',r113:'5.3%',frac113:'',t114:'4%',r114:'3.2%',frac114:'',missed:'',t115:'4 %',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'112-4.3% 113-5.3% 114-3.2% 針對新北市身心障礙團體清單推動癌症篩檢'}]},{id:'q7',name:'Q7 安寧療護推動組',type:'non-medical',total:8,missed:0,lowered:0,maintained:8,raised:0,basis:'C',indicators:[{id:'q7-1',no:'1',cancer:'',name:'佔床率',attr:'正',change:'',t112:'85%',r112:'86%',frac112:'',t113:'86%',r113:'77.6%',frac113:'',t114:'86%',r114:'79.1%',frac114:'',missed:'',t115:'86%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-2',no:'2',cancer:'',name:'安寧緩和專科醫師訓練(名)',attr:'正',change:'',t112:'5%',r112:'5%',frac112:'',t113:'6%',r113:'4%',frac113:'',t114:'3%',r114:'0%',frac114:'',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-3',no:'3',cancer:'',name:'安寧共照新收案數(人/月)',attr:'正',change:'',t112:'75%',r112:'66%',frac112:'',t113:'75%',r113:'60%',frac113:'',t114:'60%',r114:'71%',frac114:'',missed:'',t115:'60%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-4',no:'4',cancer:'',name:'安寧療護涵蓋率',attr:'正',change:'',t112:'80%',r112:'81%',frac112:'400/494',t113:'82%',r113:'75%',frac113:'387/514',t114:'82%',r114:'64%',frac114:'343/534',missed:'',t115:'75%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-5',no:'5',cancer:'',name:'緩和醫療家庭諮詢會議(場)',attr:'正',change:'',t112:'400%',r112:'412%',frac112:'',t113:'420%',r113:'379%',frac113:'',t114:'420%',r114:'335%',frac114:'',missed:'',t115:'400%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-6',no:'6',cancer:'',name:'安寧居家訪視量',attr:'正',change:'',t112:'135%',r112:'118%',frac112:'',t113:'135%',r113:'93%',frac113:'',t114:'90%',r114:'54%',frac114:'',missed:'',t115:'90',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-7',no:'7',cancer:'',name:'安寧居家在宅往生率',attr:'正',change:'',t112:'65%',r112:'60%',frac112:'61/102',t113:'65%',r113:'62%',frac113:'63/102',t114:'65%',r114:'40%',frac114:'',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q7-8',no:'8',cancer:'',name:'預立醫療照護諮商門診簽署人數(份)',attr:'正',change:'',t112:'100%',r112:'1499',frac112:'',t113:'100%',r113:'398%',frac113:'',t114:'',r114:'99.7%',frac114:'806/808',missed:'',t115:'500%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q8',name:'Q8 復健組',type:'non-medical',total:5,missed:0,lowered:0,maintained:5,raised:0,basis:'C',indicators:[{id:'q8-1',no:'1',cancer:'',name:'促進運動防癌-含規範建立、講座、訓練班執行狀況(場)',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'1%',r113:'1%',frac113:'',t114:'2%',r114:'3%',frac114:'',missed:'',t115:'4',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q8-2',no:'2',cancer:'',name:'頭頸癌症手術後復健衛教單張',attr:'正',change:'114年新增',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'1%',r114:'1%',frac114:'',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q8-3',no:'3',cancer:'',name:'頭頸癌病人復健轉介率',attr:'正',change:'',t112:'70%',r112:'87%',frac112:'107/123',t113:'75%',r113:'83.8%',frac113:'109/130',t114:'80%',r114:'92.3%',frac114:'',missed:'',t115:'65%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q8-4',no:'4',cancer:'',name:'頭頸癌病人鼻胃管移除率',attr:'正',change:'',t112:'80%',r112:'85%',frac112:'68/80',t113:'85%',r113:'91.1%',frac113:'41/45',t114:'90%',r114:'98.5%',frac114:'',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q8-5',no:'5',cancer:'',name:'乳癌復健治療目標達成率 (目標達成人數/復健治療結案人數)',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'-',r113:'33%',frac113:'13/39',t114:'40%',r114:'52.8%',frac114:'',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q9',name:'Q9 營養衛教組',type:'non-medical',total:7,missed:0,lowered:0,maintained:7,raised:0,basis:'C',indicators:[{id:'q9-1',no:'1',cancer:'',name:'9A病房執行癌症營養教育講座 (場次)',attr:'正',change:'',t112:'2%',r112:'2%',frac112:'2/2',t113:'2%',r113:'2%',frac113:'2/2',t114:'2%',r114:'2%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-2',no:'2',cancer:'',name:'7A病房執行癌症營養教育講座 (場次)',attr:'正',change:'',t112:'2%',r112:'2%',frac112:'2/2',t113:'2%',r113:'2%',frac113:'2/2',t114:'2%',r114:'2%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-3',no:'3',cancer:'',name:'血腫科診間外執行癌症營養教育講座 (場次)',attr:'正',change:'',t112:'2%',r112:'0%',frac112:'',t113:'2%',r113:'2%',frac113:'2/2',t114:'2%',r114:'2%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-4',no:'4',cancer:'',name:'住院癌症病人營養評估及飲食衛教服務量 (人次)',attr:'正',change:'',t112:'2800',r112:'2765',frac112:'',t113:'2800',r113:'2123',frac113:'',t114:'2800',r114:'82%',frac114:'',missed:'',t115:'2800',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-5',no:'5',cancer:'',name:'門診癌症病人營養評估及飲食衛教諮詢量 (人次)',attr:'正',change:'',t112:'320%',r112:'315%',frac112:'',t113:'320%',r113:'344%',frac113:'',t114:'320%',r114:'100%',frac114:'',missed:'',t115:'320',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-6',no:'6',cancer:'',name:'統計營養照護相關資料回饋至各病房',attr:'正',change:'',t112:'統計營養照護相關資料回饋至各病房 1. 統計營養照護原因 2. 統計癌症病人營養照護前後體重變化 3. 統計癌症病人營養照護前後PG-SGA分數變化',r112:'於營養衛教小組回饋：3/27、6/27、9/27、12/28',frac112:'',t113:'統計營養照護相關資料回饋至各病房 1. 統計營養照護原因 2. 統計癌症病人營養照護前後體重變化 3. 統計癌症病人營養照護前後PG-SGA分數變化',r113:'無資料回饋',frac113:'',t114:'每季於營養衛教小組回饋',r114:'營養衛教小組回饋：3/26、6/25、9/24、12/24',frac114:'',missed:'',t115:'每季',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q9-7',no:'7',cancer:'',name:'住院頭頸癌、上消化道癌症病人營養照護完成率',attr:'正',change:'',t112:'',r112:'',frac112:'',t113:'90%',r113:'77.7%',frac113:'',t114:'90%',r114:'90%',frac114:'589/657',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q10',name:'Q10 社工服務組',type:'non-medical',total:7,missed:0,lowered:0,maintained:7,raised:0,basis:'C',indicators:[{id:'q10-1',no:'1',cancer:'',name:'癌症資源中心及臨床社會工作(服務人次)',attr:'正',change:'',t112:'2500',r112:'3592',frac112:'',t113:'2500',r113:'2434',frac113:'',t114:'2500',r114:'2643',frac114:'',missed:'',t115:'2500%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q10-2',no:'2',cancer:'',name:'癌品、跨團隊會議',attr:'正',change:'',t112:'8%',r112:'8%',frac112:'',t113:'8%',r113:'16%',frac113:'',t114:'15%',r114:'19%',frac114:'',missed:'',t115:'15%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q10-3',no:'3',cancer:'',name:'教育訓練課程',attr:'正',change:'',t112:'2%',r112:'2%',frac112:'',t113:'2%',r113:'3%',frac113:'',t114:'2%',r114:'3%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q10-4',no:'4',cancer:'',name:'病友團體-乳癌(場次)',attr:'正',change:'',t112:'7%',r112:'7%',frac112:'',t113:'7%',r113:'11%',frac113:'',t114:'7%',r114:'11%',frac114:'',missed:'',t115:'7',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'未達原因：114年肺癌由三院合辦，每四個月一場，雙和主辦一場，協辦兩場'},{id:'q10-5',no:'5',cancer:'',name:'病友團體-頭頸癌(場次)',attr:'正',change:'',t112:'2%',r112:'2%',frac112:'',t113:'2%',r113:'2%',frac113:'',t114:'2%',r114:'2%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'未達原因：114年肺癌由三院合辦，每四個月一場，雙和主辦一場，協辦兩場'},{id:'q10-6',no:'6',cancer:'',name:'病友團體-大腸癌(場次)',attr:'正',change:'',t112:'2%',r112:'2%',frac112:'',t113:'2%',r113:'2%',frac113:'',t114:'2%',r114:'2%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'未達原因：114年肺癌由三院合辦，每四個月一場，雙和主辦一場，協辦兩場'},{id:'q10-7',no:'7',cancer:'',name:'病友團體-肺癌(場次)',attr:'正',change:'',t112:'2%',r112:'1%',frac112:'',t113:'2%',r113:'1%',frac113:'',t114:'2%',r114:'1%',frac114:'',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'未達原因：114年肺癌由三院合辦，每四個月一場，雙和主辦一場，協辦兩場'}]},{id:'q11',name:'Q11 心理腫瘤醫療服務組',type:'non-medical',total:7,missed:0,lowered:0,maintained:7,raised:0,basis:'C',indicators:[{id:'q11-1',no:'1',cancer:'',name:'癌症住院病人情緒壓力篩檢率-BSRS',attr:'正',change:'114年刪除',t112:'88%',r112:'8%',frac112:'4201/4774',t113:'88%',r113:'88.3%',frac113:'5703/6457',t114:'88%',r114:'72.7%',frac114:'5072/6978',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-2',no:'2',cancer:'',name:'癌症住院病人情緒壓力篩檢率-DT',attr:'正',change:'115年新增',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'',r114:'99.1%',frac114:'7833/7905',missed:'',t115:'99%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-3',no:'3',cancer:'',name:'癌症住院病人情緒壓力篩檢及照會服務率',attr:'正',change:'',t112:'99%',r112:'97.8%',frac112:'182/186',t113:'98%',r113:'98.2%',frac113:'217/221',t114:'98%',r114:'98%',frac114:'219/222',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-4',no:'4',cancer:'',name:'AYA病人心理痛苦溫度計(DT)篩檢率',attr:'正',change:'',t112:'70%',r112:'81.6%',frac112:'40/49',t113:'75%',r113:'86.5%',frac113:'32/37',t114:'78%',r114:'73.3%',frac114:'33/45',missed:'',t115:'99%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-5',no:'5',cancer:'',name:'癌品會、跨團隊會議(場)',attr:'正',change:'',t112:'12%',r112:'12%',frac112:'',t113:'12%',r113:'18%',frac113:'',t114:'20%',r114:'25%',frac114:'',missed:'',t115:'20%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-6',no:'6',cancer:'',name:'臨床心理相關業務之推廣-院外教育訓練、社區講座(場)',attr:'正',change:'',t112:'1%',r112:'1%',frac112:'',t113:'1%',r113:'2%',frac113:'',t114:'1%',r114:'5%',frac114:'',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q11-7',no:'7',cancer:'',name:'教學業務-院內教育訓練、病房講課 (場)',attr:'正',change:'',t112:'3%',r112:'12%',frac112:'',t113:'3%',r113:'3%',frac113:'',t114:'3%',r114:'2%',frac114:'',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'q12',name:'Q12 癌症登記資料庫管理組',type:'non-medical',total:4,missed:0,lowered:0,maintained:4,raised:0,basis:'C',indicators:[{id:'q12-1',no:'1',cancer:'',name:'1-1 男女前十大癌症均登錄危險因子，長表共115欄位，其餘需登錄短表45欄位 1-2 依據國民健康局規定之申報時程，於2、5、8、11月定期申報本院癌症個案及完成線上勘誤作業 1-3 定期將癌症資料庫異動資料完成線上勘誤作業並上傳',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'',t113:'95%',r113:'100%',frac113:'',t114:'95%',r114:'100%',frac114:'',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q12-2',no:'2',cancer:'',name:'預定第3、6、9、12月癌症登記資料庫內部審閱',attr:'正',change:'',t112:'95%',r112:'99.6%',frac112:'',t113:'96%',r113:'',frac113:'',t114:'96%',r114:'99%',frac114:'337/1675',missed:'',t115:'4',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q12-3',no:'3',cancer:'',name:'預定第3及7月進行癌症登記資料庫外部稽',attr:'正',change:'',t112:'95%',r112:'99.7%',frac112:'',t113:'96%',r113:'',frac113:'',t114:'96%',r114:'99%',frac114:'337/1675',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'q12-4',no:'4',cancer:'',name:'預定第3月及5月執行癌症資料庫個案電話追蹤',attr:'正',change:'',t112:'95%',r112:'98.9%',frac112:'',t113:'96%',r113:'99%',frac113:'',t114:'96%',r114:'98%',frac114:'6266/6357',missed:'',t115:'2',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'m1',name:'M1 診斷期遵行率',type:'medical',total:21,missed:0,lowered:0,maintained:21,raised:0,basis:'C',indicators:[{id:'m1-1',no:'1',cancer:'口腔癌',name:'診斷期遵行率－口腔癌',attr:'正',change:'',t112:'90%',r112:'82%',frac112:'62/76',t113:'90%',r113:'69%',frac113:'44/64',t114:'90%',r114:'88%',frac114:'74/84',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'四名病人未安排會診(復健科*3、耳鼻喉科*1)。 四名病人採緩和治療，經主治醫師評估，無安排檢查之必要。 二名病人無法配合檢查與會診。 改善：已建立檢查套餐，加強宣導。'},{id:'m1-2',no:'2',cancer:'鼻咽癌',name:'診斷期遵行率－鼻咽癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'21/21',t113:'90%',r113:'86%',frac113:'12/14',t114:'90%',r114:'100%',frac114:'18/18',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-3',no:'3',cancer:'口咽癌',name:'診斷期遵行率－口咽癌',attr:'正',change:'',t112:'90%',r112:'83%',frac112:'15/18',t113:'90%',r113:'82%',frac113:'14/17',t114:'90%',r114:'92%',frac114:'24/26',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-4',no:'4',cancer:'下咽癌',name:'診斷期遵行率－下咽癌',attr:'正',change:'',t112:'90%',r112:'93%',frac112:'13/14',t113:'90%',r113:'85%',frac113:'11/13',t114:'90%',r114:'71%',frac114:'5/7',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'兩名病人採緩和治療，經主治醫師評估，無安排檢查之必要。'},{id:'m1-5',no:'5',cancer:'喉癌',name:'診斷期遵行率－喉癌',attr:'正',change:'',t112:'90%',r112:'83%',frac112:'5/6',t113:'90%',r113:'89%',frac113:'8/9',t114:'90%',r114:'100%',frac114:'11/11',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-6',no:'6',cancer:'甲狀腺癌',name:'診斷期遵行率－甲狀腺癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'66/66',t113:'95%',r113:'100%',frac113:'60/60',t114:'95%',r114:'100%',frac114:'85/85',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-7',no:'7',cancer:'乳癌',name:'診斷期遵行率－乳癌',attr:'正',change:'',t112:'90%',r112:'87%',frac112:'193/221',t113:'90%',r113:'92%',frac113:'225/244',t114:'90%',r114:'91%',frac114:'236/260',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-8',no:'8',cancer:'小細胞癌',name:'診斷期遵行率－小細胞癌',attr:'正',change:'',t112:'93%',r112:'94%',frac112:'17/18',t113:'93%',r113:'92%',frac113:'11/12',t114:'93%',r114:'95%',frac114:'19/20',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'病人失聯*1'},{id:'m1-9',no:'9',cancer:'非小細胞肺癌',name:'診斷期遵行率－非小細胞肺癌',attr:'正',change:'',t112:'93%',r112:'99%',frac112:'170/171',t113:'93%',r113:'93%',frac113:'198/213',t114:'94%',r114:'91.9%',frac114:'195/212',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'僅排檢LDCT*1 安寧療護*3 Brain MRI/PET逾期2個月以上*7 未排檢Brain MRI/PET*2 病人已死亡*3 病人拒絕*1'},{id:'m1-10',no:'10',cancer:'食道癌',name:'診斷期遵行率－食道癌',attr:'正',change:'',t112:'80%',r112:'90%',frac112:'26/29',t113:'82%',r113:'83%',frac113:'24/29',t114:'82%',r114:'91.9%',frac114:'34/37',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'非M1未排程EUS *2 Chest/abdomen CT *1'},{id:'m1-11',no:'11',cancer:'胃癌',name:'診斷期遵行率－胃癌',attr:'正',change:'',t112:'90%',r112:'86%',frac112:'36/44',t113:'90%',r113:'89%',frac113:'39/44',t114:'90%',r114:'83%',frac114:'40/48',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'●未接受營養評估： 1名89歲/ECOG2拒檢查及治療、 １名醫師未會診營養科 1名85歲拒絕、 ●未做腹部CT(加顯影劑) ２名醫師未開立 1名年紀93歲腎功能差家屬拒絕。 ●Her2/neu(Stage IV)： １名ECOG>2採安寧療法、1名93歲採安寧、 １名 Refused IV C/T 改善:1.團隊宣導;2.告知主治醫師;3.病歷詳細記載'},{id:'m1-12',no:'12',cancer:'淋巴癌',name:'診斷期遵行率－淋巴癌',attr:'正',change:'',t112:'85%',r112:'98%',frac112:'42/43',t113:'90%',r113:'98%',frac113:'44/45',t114:'95%',r114:'97%',frac114:'58/60',missed:'',t115:'97%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名於治療後才排檢; 1名主治醫師有開檢驗單，但病人未驗'},{id:'m1-13',no:'13',cancer:'大腸癌',name:'診斷期遵行率－大腸癌',attr:'正',change:'',t112:'80%',r112:'95%',frac112:'229/240',t113:'90%',r113:'91%',frac113:'191/209',t114:'90%',r114:'95%',frac114:'208/218',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'●未做大腸鏡加切片: 1名未做大腸鏡，1名指大腸鏡未Biopsy，1名術後10個月大腸鏡行polypectomy ●7名未做MMR or MSI: 醫師未開單'},{id:'m1-14',no:'14',cancer:'胰臟癌',name:'診斷期遵行率－胰臟癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'37/37',t113:'90%',r113:'100%',frac113:'20/20',t114:'92%',r114:'100%',frac114:'43/43',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-15',no:'15',cancer:'膽管癌',name:'診斷期遵行率－膽管癌',attr:'正',change:'',t112:'80%',r112:'85%',frac112:'18/20',t113:'80%',r113:'100%',frac113:'19/19',t114:'82%',r114:'83%',frac114:'20/24',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'●1名未抽CEA/CA 19-9:一確診即採緩和安寧照護 ●3名未做大腸鏡&胃鏡(肝內): 醫師未開單'},{id:'m1-16',no:'16',cancer:'肝癌',name:'診斷期遵行率－肝癌',attr:'正',change:'',t112:'92%',r112:'95%',frac112:'57/60',t113:'95%',r113:'94%',frac113:'66/70',t114:'95%',r114:'99%',frac114:'91/92',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名未驗AFP或腹超診斷'},{id:'m1-17',no:'17',cancer:'攝護腺癌',name:'診斷期遵行率－攝護腺癌',attr:'正',change:'',t112:'85%',r112:'99%',frac112:'103/105',t113:'90%',r113:'90%',frac113:'148/165',t114:'92%',r114:'93%',frac114:'138/149',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'11名未做DRE'},{id:'m1-18',no:'18',cancer:'膀胱癌',name:'診斷期遵行率－膀胱癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'39/39',t113:'90%',r113:'100%',frac113:'55/55',t114:'92%',r114:'82%',frac114:'42/51',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因分析: 1.醫師未開單:>T2未驗ALK-P:8名 2.1名未做膀胱鏡:因BPH術後發現膀胱癌 改善: 1.2025.12.10團隊宣導2.設立抽血套餐 3.個管留言系統提醒'},{id:'m1-19',no:'19',cancer:'子宮頸癌',name:'診斷期遵行率－子宮頸癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'15/15',t113:'92%',r113:'100%',frac113:'12/12',t114:'94%',r114:'94%',frac114:'15/16',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名84歲拒檢查及治療'},{id:'m1-20',no:'20',cancer:'卵巢癌',name:'診斷期遵行率－卵巢癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'18/18',t113:'92%',r113:'100%',frac113:'11/11',t114:'94%',r114:'100%',frac114:'29/29',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m1-21',no:'21',cancer:'子宮體癌',name:'診斷期遵行率－子宮體癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'33/33',t113:'92%',r113:'93%',frac113:'29/31',t114:'94%',r114:'90%',frac114:'46/51',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因分析: 1名 術後診斷,未排影像 1名 手術肌瘤,意外診斷為子宮內膜癌 1名 影像ruptured ovarian cyst直接安排手術,術後診斷卵巢癌及子宮內膜癌,未有內膜組織切片 1名 未排檢CT或MRI 1名原診斷卵巢癌，未做子宮內膜D&C檢查 改善:1.115.02.12團隊會議報告-分析原因及宣導 2.回饋主治醫師'}]},{id:'m2',name:'M2 治療期遵循率',type:'medical',total:21,missed:0,lowered:0,maintained:21,raised:0,basis:'C',indicators:[{id:'m2-1',no:'1',cancer:'口腔癌',name:'治療期遵循率－口腔癌',attr:'正',change:'',t112:'90%',r112:'95%',frac112:'72/76',t113:'90%',r113:'97%',frac113:'58/60',t114:'95%',r114:'97%',frac114:'74/76',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-2',no:'2',cancer:'鼻咽癌',name:'治療期遵循率－鼻咽癌',attr:'正',change:'',t112:'90%',r112:'95%',frac112:'20/21',t113:'90%',r113:'100%',frac113:'1/13',t114:'90%',r114:'94%',frac114:'17/18',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-3',no:'3',cancer:'口咽癌',name:'治療期遵循率－口咽癌',attr:'正',change:'',t112:'85%',r112:'89%',frac112:'16/18',t113:'85%',r113:'92%',frac113:'13/13',t114:'90%',r114:'92%',frac114:'24/26',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-4',no:'4',cancer:'下咽癌',name:'治療期遵循率－下咽癌',attr:'正',change:'',t112:'85%',r112:'93%',frac112:'13/14',t113:'85%',r113:'100%',frac113:'11/11',t114:'90%',r114:'100%',frac114:'7/7',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-5',no:'5',cancer:'喉癌',name:'治療期遵循率－喉癌',attr:'正',change:'',t112:'90%',r112:'83%',frac112:'5/6',t113:'90%',r113:'100%',frac113:'9/9',t114:'90%',r114:'100%',frac114:'10/10',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-6',no:'6',cancer:'甲狀腺癌',name:'治療期遵循率－甲狀腺癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'66/66',t113:'95%',r113:'100%',frac113:'60/60',t114:'95%',r114:'100%',frac114:'90/90',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-7',no:'7',cancer:'乳癌',name:'治療期遵循率－乳癌',attr:'正',change:'',t112:'85%',r112:'90%',frac112:'145/161',t113:'88%',r113:'85%',frac113:'162/190',t114:'88%',r114:'82%',frac114:'105/128',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'病患因素共15名： 10 名拒絕化療、3 名手術後轉院、1 名因民俗(農曆七月)延遲治療、1 名因副作用過大中止計畫。 年齡因素共7名： 5 名因年紀大拒絕IV C/T、1 名因Poor PS僅能維持H/T、1 名因高齡導致傷口癒合不良。 疾病因素共1名： 1 名個案共病多，經評估不適合進行標準化學治療。'},{id:'m2-8',no:'8',cancer:'小細胞癌',name:'治療期遵循率－小細胞癌',attr:'正',change:'',t112:'93%',r112:'100%',frac112:'18/18',t113:'93%',r113:'100%',frac113:'12/12',t114:'93%',r114:'90%',frac114:'18/20',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'病人失聯*1 ECOG:2、OID AGE:77 *1'},{id:'m2-9',no:'9',cancer:'非小細胞癌',name:'治療期遵循率－非小細胞癌',attr:'正',change:'',t112:'93%',r112:'99%',frac112:'170/171',t113:'93%',r113:'98%',frac113:'203/207',t114:'95%',r114:'97.3%',frac114:'180/185',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'病人拒絕*3 OID AGE:82 *1 COPD*1'},{id:'m2-10',no:'10',cancer:'食道癌',name:'治療期遵循率－食道癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'29/29',t113:'92%',r113:'100%',frac113:'28/28',t114:'92%',r114:'97.3%',frac114:'36/37',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'病人拒絕*1'},{id:'m2-11',no:'11',cancer:'胃癌',name:'治療期遵循率－胃癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'41/41',t113:'95%',r113:'100%',frac113:'28/28',t114:'95%',r114:'96%',frac114:'44/46',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'●1名 89歲拒進一步診斷 ●1名 85歲拒絕手術與化療'},{id:'m2-12',no:'12',cancer:'淋巴癌',name:'治療期遵循率－淋巴癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'30/30',t113:'92%',r113:'88%',frac113:'37/42',t114:'92%',r114:'98%',frac114:'58/59',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名90歲只採R/T'},{id:'m2-13',no:'13',cancer:'大腸癌',name:'治療期遵循率－大腸癌',attr:'正',change:'',t112:'80%',r112:'90%',frac112:'207/231',t113:'90%',r113:'90%',frac113:'167/189',t114:'90%',r114:'95%',frac114:'209/220',missed:'',t115:'91%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名病人拒OP採安寧，拒C/T:4名年紀大(92歲/86歲/83歲/85歲)、1名75歲ECOG:4、1名70歲ECOG:3、1名病人因事務繁忙拒，1名85歲拒RT吃口服化療，1名cT3N0M0因94歲採保守治療，1名應Palliative C/T因死亡未C/T'},{id:'m2-14',no:'14',cancer:'胰臟癌',name:'治療期遵循率－胰臟癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'37/37',t113:'80%',r113:'100%',frac113:'20/20',t114:'85%',r114:'100%',frac114:'20/20',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-15',no:'15',cancer:'膽管癌',name:'治療期遵循率－膽管癌',attr:'正',change:'',t112:'80%',r112:'91%',frac112:'17/18',t113:'80%',r113:'100%',frac113:'19/19',t114:'85%',r114:'96%',frac114:'23/24',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名拒OP採安寧緩和'},{id:'m2-16',no:'16',cancer:'肝癌',name:'治療期遵循率－肝癌',attr:'正',change:'',t112:'92%',r112:'100%',frac112:'57/57',t113:'95%',r113:'100%',frac113:'67/67',t114:'95%',r114:'99%',frac114:'95/96',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名 拒RFA:因長期大陸工作refused admission/NA'},{id:'m2-17',no:'17',cancer:'攝護腺癌',name:'治療期遵循率－攝護腺癌',attr:'正',change:'',t112:'85%',r112:'97%',frac112:'88/99',t113:'90%',r113:'99%',frac113:'144/145',t114:'95%',r114:'98%',frac114:'132/135',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-18',no:'18',cancer:'膀胱癌',name:'治療期遵循率－膀胱癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'30/30',t113:'90%',r113:'98%',frac113:'52/53',t114:'92%',r114:'98%',frac114:'52/53',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m2-19',no:'19',cancer:'子宮頸癌',name:'治療期遵循率－子宮頸癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'9/9',t113:'92%',r113:'87%',frac113:'13/15',t114:'92%',r114:'94%',frac114:'16/17',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名84歲拒檢查及治療/NA'},{id:'m2-20',no:'20',cancer:'卵巢癌',name:'治療期遵循率－卵巢癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'16/16',t113:'92%',r113:'94%',frac113:'18/19',t114:'92%',r114:'81%',frac114:'21/26',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因分析: 1名 78歲 化療後拒手術 3名 拒化療 1名 87歲,家屬拒化療 改善: 1.115.02.12團隊報告-原因分析 2.尊重病人決定及病歷詳細記載不遵循原因'},{id:'m2-21',no:'21',cancer:'子宮體癌',name:'治療期遵循率－子宮體癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'30/30',t113:'92%',r113:'92%',frac113:'34/37',t114:'92%',r114:'97%',frac114:'66/68',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名 拒絕C/T,只採 R/T 1名 家屬拒,病人有思覺失調約30年(服藥控制)住於安置機構接送就醫不方便'}]},{id:'m3',name:'M3 治療計畫書完整率',type:'medical',total:17,missed:0,lowered:0,maintained:17,raised:0,basis:'C',indicators:[{id:'m3-1',no:'1',cancer:'乳癌',name:'計 畫 書 完 整 率－乳癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'',t113:'90%',r113:'100%',frac113:'',t114:'95%',r114:'90%',frac114:'27/30',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(27/30)，3本計劃書完整率不符合 改善:團隊宣導、教育訓練'},{id:'m3-2',no:'2',cancer:'大腸癌',name:'計 畫 書 完 整 率－大腸癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'',t113:'85%',r113:'100%',frac113:'',t114:'85%',r114:'97%',frac114:'29/30',missed:'',t115:'97%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(29/30)，1本計劃書完整率不符合 改善:1.2025.12.31團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-3',no:'3',cancer:'胃癌',name:'計 畫 書 完 整 率－胃癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'',t113:'90%',r113:'94%',frac113:'',t114:'90%',r114:'86%',frac114:'6/7',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(6/7)，1本首次療程未符合計畫書 改善:1.2025.12.31團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-4',no:'4',cancer:'肝癌',name:'計 畫 書 完 整 率－肝癌',attr:'正',change:'',t112:'92%',r112:'100%',frac112:'',t113:'95%',r113:'89%',frac113:'',t114:'90%',r114:'88%',frac114:'7/8',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷88%(7/8)，1本計劃書完整率不符合 改善:1.2025.12.31團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-5',no:'5',cancer:'胰臟癌',name:'計 畫 書 完 整 率－胰臟癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'',t113:'90%',r113:'85%',frac113:'',t114:'92%',r114:'88%',frac114:'7/8',missed:'',t115:'84%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(7/8)，1本計劃書完整率不符合 改善:1.2025.12.31團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-6',no:'6',cancer:'膽管癌',name:'計 畫 書 完 整 率－膽管癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'',t113:'90%',r113:'85%',frac113:'',t114:'92%',r114:'88%',frac114:'7/8',missed:'',t115:'84%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(7/8)，1本計劃書完整率不符合 改善:1.2025.12.31團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-7',no:'7',cancer:'膀胱癌',name:'計 畫 書 完 整 率－膀胱癌',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'',t113:'95%',r113:'93%',frac113:'',t114:'94%',r114:'91%',frac114:'21/23',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(20/23)，3本計畫書未符合指引 改善:1.2025.12.10團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-8',no:'8',cancer:'攝護腺癌',name:'計 畫 書 完 整 率－攝護腺癌',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'',t113:'95%',r113:'93%',frac113:'',t114:'94%',r114:'91%',frac114:'21/23',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(20/23)，3本計畫書未符合指引 改善:1.2025.12.10團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-9',no:'9',cancer:'鼻咽癌',name:'計 畫 書 完 整 率－鼻咽癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'',t113:'95%',r113:'100%',frac113:'',t114:'95%',r114:'100%',frac114:'16/16',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m3-10',no:'10',cancer:'頭頸癌',name:'計 畫 書 完 整 率－頭頸癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'',t113:'95%',r113:'100%',frac113:'',t114:'95%',r114:'100%',frac114:'16/16',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m3-11',no:'11',cancer:'肺癌',name:'計 畫 書 完 整 率－肺癌',attr:'正',change:'',t112:'93%',r112:'96%',frac112:'',t113:'93%',r113:'100%',frac113:'',t114:'94%',r114:'93%',frac114:'25/27',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m3-12',no:'12',cancer:'子宮體癌',name:'計 畫 書 完 整 率－子宮體癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'',t113:'',r113:'100%',frac113:'',t114:'92%',r114:'92%',frac114:'11/12',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(10/12)，2本計劃書完整率不符合 改善:1.2026.01.08團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報'},{id:'m3-13',no:'13',cancer:'子宮頸癌',name:'計 畫 書 完 整 率－子宮頸癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'',t113:'90%',r113:'100%',frac113:'',t114:'92%',r114:'92%',frac114:'11/12',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(10/12)，2本計劃書完整率不符合 改善:1.2026.01.08團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報'},{id:'m3-14',no:'14',cancer:'卵巢癌',name:'計 畫 書 完 整 率－卵巢癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'',t113:'90%',r113:'100%',frac113:'',t114:'92%',r114:'92%',frac114:'11/12',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(10/12)，2本計劃書完整率不符合 改善:1.2026.01.08團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報'},{id:'m3-15',no:'15',cancer:'食道癌',name:'計 畫 書 完 整 率－食道癌',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'',t113:'85%',r113:'100%',frac113:'',t114:'85%',r114:'75%',frac114:'3/4',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷(3/4)，1本首次療程未符合計畫書(16506615) 改善:因病人後續拒治療，已補正在治療計畫書'},{id:'m3-16',no:'16',cancer:'血液暨淋巴癌',name:'計 畫 書 完 整 率－血液暨淋巴癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'',t113:'95%',r113:'97%',frac113:'',t114:'97%',r114:'92%',frac114:'11/12',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因:依抽審10%病歷，1本計劃書完整率不符合 改善:1.2026.01.05團隊宣導；2.已通知主治醫師並補正;3.持續監測及回饋團隊並定期癌委會報告'},{id:'m3-17',no:'17',cancer:'甲狀腺癌',name:'計 畫 書 完 整 率－甲狀腺癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'',t113:'95%',r113:'97%',frac113:'',t114:'95%',r114:'100%',frac114:'8/8',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'m4',name:'M4 非動態核心指標',type:'medical',total:74,missed:0,lowered:0,maintained:74,raised:0,basis:'C',indicators:[{id:'m4-1',no:'1',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】1.第1、2期乳癌以手術為首次治 療，最後病理腋下淋巴結為陰 性、施行哨兵淋巴結取樣術的 比率－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'99/99',t113:'100%',r113:'100%',frac113:'81/81',t114:'100%',r114:'100%',frac114:'99/99',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'-'},{id:'m4-2',no:'2',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】2.淋巴結陽性≧4顆乳房全切除有 進行放射治療的比率－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'10/10',t113:'100%',r113:'90%',frac113:'9/10',t114:'100%',r114:'88%',frac114:'7/8',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1位拒絕R/T'},{id:'m4-3',no:'3',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】3.乳癌手術後HER2接受體陽性 且淋巴轉移之病人，給予輔助 性anti HER2藥物治療的比率－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'26/27',t113:'98%',r113:'90%',frac113:'9/10',t114:'95%',r114:'88%',frac114:'7/8',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1位因年紀大拒絕'},{id:'m4-4',no:'4',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】4.侵犯性乳癌病人，ER接受體陽 性(+)給予賀爾蒙治療的比率－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'95%',r112:'99%',frac112:'153/155',t113:'99%',r113:'99%',frac113:'127/128',t114:'99%',r114:'99%',frac114:'153/154',missed:'',t115:'99%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1位病人拒C/T&H/T'},{id:'m4-5',no:'5',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】5.乳癌婦女施行首次治療前 有乳房X光攝影及腹部超音 波(排除0、一期)的比率－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'85%',r112:'87%',frac112:'212/243',t113:'88%',r113:'88%',frac113:'184/210',t114:'88%',r114:'83%',frac114:'92/111',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'共19名: 3位未做乳攝 1位(81y/o)ECOG差 5位因傷口潰瘍、疼痛 1位腰椎骨折無法站立 4位 Brest核磁共振 1位 DBT 4位MG與首療超過3個'},{id:'m4-6',no:'6',cancer:'乳癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】6.乳癌病人（排除0期癌）接 受乳房保留手術後接受放 射線治療的比例－乳癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'123/128',t113:'96%',r113:'100%',frac113:'110/110',t114:'99%',r114:'97%',frac114:'120/122',missed:'',t115:'99%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名拒RT 1名未完成治療即死亡'},{id:'m4-7',no:'7',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】1.有進行腫瘤原發部位手術的臨床第IB-II 期非小細胞肺癌病患完成原發部位同側 縱膈腔淋巴結取樣或摘除至少3個位置 以上(≥3 N2 stations)的比率。－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'22/22',t113:'90%',r113:'100%',frac113:'12/12',t114:'91%',r114:'80%',frac114:'8/10',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'6582067蔡再華、 12705342 王福敏 N2*1'},{id:'m4-8',no:'8',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】2.有進行腫瘤原發部位切除性手術的臨床 第IIIA期非小細胞肺癌病患完成原發部 位同側縱膈腔淋巴結取樣摘除至少3個 位置以上(≥3 N2 stations)的比率。－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'7/7',t113:'85%',r113:'100%',frac113:'10/10',t114:'88%',r114:'80%',frac114:'12/14',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'00407539 潘志銘 N2*2、10797868張春花 未拿淋巴結'},{id:'m4-9',no:'9',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】3.有進行腫瘤原發部位切除性手術的臨床 第IB-II期非小細胞肺癌病患進行肺葉切 除Lobectomy 或肺節切除 segmentectomy 的比率－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'22/22',t113:'90%',r113:'100%',frac113:'12/12',t114:'90%',r114:'100%',frac114:'10/10',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-10',no:'10',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】4.有進行腫瘤原發部位切除性手術的臨床 第IIIA-IIIB期非小細胞肺癌病患進行肺 葉切除Lobectomy或肺節切除 segmentectomy 的比率－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'85%',r112:'86%',frac112:'6/7',t113:'80%',r113:'100%',frac113:'12/12',t114:'80%',r114:'93%',frac114:'13/14',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'10797868 張春花 VATS wedge resection'},{id:'m4-11',no:'11',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】5.肺癌(Lung Ca)病理期別第IIIA IIIB期病 人，術後6週內接受輔助治療（放射治 療或化學放射治療）的比率－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'5/5',t113:'80%',r113:'80%',frac113:'4/5',t114:'80%',r114:'86%',frac114:'6/7',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'4417174施任正OP:2024/10/03 C/T:2025/01/06 間隔超過6週'},{id:'m4-12',no:'12',cancer:'肺癌：國健屬(2)+團隊(4)',name:'【非動態核心指標】6.肺癌(Lung Ca)癌第 IIIB IIIC期病人接受 同步化學治療及放射治療(CCRT)比率－肺癌：國健屬(2)+團隊(4)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'9/9',t113:'87%',r113:'89%',frac113:'8/9',t114:'87%',r114:'80%',frac114:'4/5',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'16415085 廖鳳山 Palliative Treatment'},{id:'m4-13',no:'13',cancer:'食道癌：國健屬(4)',name:'【非動態核心指標】1.食道癌病人手術切除標本切除 端無殘餘侵襲性癌細胞(R0 切 除)的比率。－食道癌：國健屬(4)',attr:'正',change:'',t112:'80%',r112:'91%',frac112:'10/11',t113:'85%',r113:'100%',frac113:'10/10',t114:'85%',r114:'88%',frac114:'7/8',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-14',no:'14',cancer:'食道癌：國健屬(4)',name:'【非動態核心指標】2.食道切除標本淋巴結病理檢查 15 顆(含)以上的比率。－食道癌：國健屬(4)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'9/9',t113:'82%',r113:'90%',frac113:'9/10',t114:'82%',r114:'100%',frac114:'7/7',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-15',no:'15',cancer:'食道癌：國健屬(4)',name:'【非動態核心指標】3.接受食道切除手術的病患於術後30 天內死亡的比率。－食道癌：國健屬(4)',attr:'負',change:'',t112:'',r112:'',frac112:'',t113:'',r113:'',frac113:'',t114:'9%',r114:'0%',frac114:'0/8',missed:'',t115:'5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-16',no:'16',cancer:'食道癌：國健屬(4)',name:'【非動態核心指標】4. cT4N0M0 or cTanyN1-3M0 接受食道切除手術的病患有接 受引導性化放療的比率。－食道癌：國健屬(4)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'9/9',t113:'91%',r113:'100%',frac113:'8/8',t114:'91%',r114:'100%',frac114:'8/8',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-17',no:'17',cancer:'胃癌：國健屬(4)',name:'【非動態核心指標】1.臨床分期為第 I~IIIC 期之胃及食 道賁門(EC junction)癌病人接受 手術切除(含內視鏡切除術)後， 巨觀下完全切除且顯微鏡下手術 邊界為陰性的比率。－胃癌：國健屬(4)',attr:'正',change:'',t112:'80%',r112:'93%',frac112:'24/25',t113:'85%',r113:'100%',frac113:'25/25',t114:'90%',r114:'86%',frac114:'19/22',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'2名手術邊界無陰性 改善:回饋團隊並持續追蹤與回饋機制'},{id:'m4-18',no:'18',cancer:'胃癌：國健屬(4)',name:'【非動態核心指標】2.胃及食道賁門癌接受胃切除手術( 含內視鏡切除術)的病患於術後 30天內死亡的比率。－胃癌：國健屬(4)',attr:'負',change:'',t112:'5%',r112:'0%',frac112:'0/28',t113:'5%',r113:'4%',frac113:'1/31',t114:'5%',r114:'0%',frac114:'0/22',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-19',no:'19',cancer:'胃癌：國健屬(4)',name:'【非動態核心指標】3.病理期別第 II~III 期胃及食道賁門 (EC junction)癌病人接受手術後 有做輔助型化療(包含臨床試驗) 的比率。－胃癌：國健屬(4)',attr:'正',change:'',t112:'80%',r112:'73%',frac112:'8/11',t113:'80%',r113:'100%',frac113:'17/17',t114:'80%',r114:'100%',frac114:'11/11',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-20',no:'20',cancer:'胃癌：國健屬(4)',name:'【非動態核心指標】4.病理分期為第 I 期接受內視鏡切 除術之胃及食道賁門(EC junction)癌病人，手術後 1 年內 曾接受胃鏡檢查的比率。－胃癌：國健屬(4)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'4/4',t113:'85%',r113:'100%',frac113:'7/7',t114:'90%',r114:'100%',frac114:'2/2',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-21',no:'21',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】1.極早期和早期肝癌病人接受治癒性 療法的比率－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'88%',frac112:'43/49',t113:'85%',r113:'95%',frac113:'18/19',t114:'85%',r114:'85%',frac114:'23/27',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-22',no:'22',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】2. Curative(內科和外科治癒性療法) 或 TA(C)E 治療後的肝細胞癌 病 人， 3 個月內追蹤影像學 (US or CT or 的比率。－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'85%',r112:'98%',frac112:'59/60',t113:'90%',r113:'97%',frac113:'29/30',t114:'90%',r114:'94%',frac114:'33/35',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-23',no:'23',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】3. Curative或TA(C)E治療病患，1年 內追蹤影像學(US or CT or MRI)≧3次之比率－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'85%',r112:'88%',frac112:'36/41',t113:'85%',r113:'100%',frac113:'26/26',t114:'90%',r114:'91%',frac114:'32/35',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-24',no:'24',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】4.Curative或TA(C)E治療前 AFP＞20ng/ml之肝癌 病患，治療後2個月內追 蹤AFP個案之比率－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'92%',frac112:'23/25',t113:'85%',r113:'100%',frac113:'12/12',t114:'90%',r114:'100%',frac114:'7/7',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-25',no:'25',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】5.肝癌患者接受手術切除其邊緣無殘 留癌細胞的比率。－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'113年新增',t112:'',r112:'',frac112:'',t113:'80%',r113:'100%',frac113:'18/18',t114:'90%',r114:'95%',frac114:'18/19',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-26',no:'26',cancer:'肝癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】6.肝癌(肝細胞癌)BCLC stage 0+A+B 病患等待治療時間在 45 天以內。－肝癌：國健屬(5)+團隊(1)',attr:'正',change:'113年新增',t112:'',r112:'',frac112:'',t113:'80%',r113:'94%',frac113:'31/33',t114:'85%',r114:'87%',frac114:'34/39',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-27',no:'27',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】1. 病人首次治療前，有組織學或細 胞學診斷的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'30%',r112:'91%',frac112:'11/12',t113:'60%',r113:'76.9%',frac113:'10/13',t114:'60%',r114:'83%',frac114:'20/24',missed:'',t115:'84%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-28',no:'28',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】2. 病人首次治療前（8 週內），完成 胰臟癌臨床分期 (Clinical TNM staging)並於病歷記錄的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'75%',r112:'93%',frac112:'16/17',t113:'80%',r113:'100%',frac113:'13/13',t114:'80%',r114:'100%',frac114:'19/19',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-29',no:'29',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】3.病人在接受治療前(包含手術、化 學治療、放射線治療 )，於多專科 團隊會議討論的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'70%',r112:'100%',frac112:'15/17',t113:'80%',r113:'61%',frac113:'8/13',t114:'80%',r114:'21%',frac114:'4/19',missed:'',t115:'59%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'改善: 1.2025.12.31團隊宣導2. 持續監測及回饋團隊並定期癌委會報告 3.內科切片確診即提報團隊會議'},{id:'m4-30',no:'30',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】4. 病人確診後，30 天內開始治療(包 含手術、化學治療、放射線治療) 的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'85%',r112:'94%',frac112:'15/16',t113:'85%',r113:'92%',frac113:'12/13',t114:'88%',r114:'95%',frac114:'18/9',missed:'',t115:'91%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-31',no:'31',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】5. 病人手術達到完全切除且邊緣無 侵犯(R0) 的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'7/7',t113:'80%',r113:'100%',frac113:'10/10',t114:'85%',r114:'100%',frac114:'5/5',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-32',no:'32',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】6. 病人之手術切除標本，淋巴結病 理檢查12 顆(含)以上的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'70%',r112:'88%',frac112:'8/9',t113:'75%',r113:'90%',frac113:'9/10',t114:'80%',r114:'100%',frac114:'5/5',missed:'',t115:'84%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-33',no:'33',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】7. 病人接受手術後有做輔助型化療( 包含臨床試驗)的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'75%',r112:'66%',frac112:'6/9',t113:'75%',r113:'80%',frac113:'8/10',t114:'75%',r114:'40%',frac114:'2/5',missed:'',t115:'67%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析: 1名pT1aN0Mb,I無化療 1名pT2N0Mb,IB無化療 1名74歲拒化療'},{id:'m4-34',no:'34',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】8.臨床腫瘤分期 T4 病人手術前，有 做前導化療(包含臨床試驗)的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'10%',r112:'50%',frac112:'1/2',t113:'10%',r113:'70%',frac113:'7/10',t114:'10%',r114:'0%',frac114:'0/1',missed:'',t115:'10%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析: 1名採手術治療+化療，且遵守診療指引治療 改善: 團隊宣導-為瞭解現況指標-T4腫瘤直接開刀可完全切除率不高，目前已有文獻證實前導化療可增加 T4胰臟癌切除率及降低復發率'},{id:'m4-35',no:'35',cancer:'胰臟癌：國健屬(9)',name:'【非動態核心指標】9.臨床分期第三或第四期病人，接受 全身性化療(包含臨床試驗)的比率－胰臟癌：國健屬(9)',attr:'正',change:'',t112:'85%',r112:'83%',frac112:'10/12',t113:'85%',r113:'74%',frac113:'14/19',t114:'85%',r114:'100%',frac114:'14/14',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-36',no:'36',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】1.Malignant polyp 若有下列A.B.C.D.之一， 於病理報告後12週內接受治癒性切除術（ curative resection）之百分比 A.大腸鏡檢報告指出息肉未完全被切除 B.手術切除外緣之癌細胞呈陽性 C.癌細胞已侵犯淋巴或靜脈組織 D.病理顯示為第3級或屬分化不全之癌細胞 (T1以上，TIS不算)－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'16/16',t113:'85%',r113:'100%',frac113:'15/15',t114:'85%',r114:'100%',frac114:'4/4',missed:'',t115:'86%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-37',no:'37',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】2.病理期別第I ~III 期結腸癌 (Colon 手術病 人，淋巴結病理檢查 12 顆以上的比率。－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'122/122',t113:'95%',r113:'100%',frac113:'135/135',t114:'95%',r114:'100%',frac114:'87/87',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-38',no:'38',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】3.第II、III期(臨床期別為主)直腸癌(Rectum Ca)病人，6週內開始治療(手術或放療或 CCRT)的比率。－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'37/37',t113:'93%',r113:'96.1%',frac113:'25/26',t114:'90%',r114:'100%',frac114:'14/14',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-39',no:'39',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】4.接受大腸癌切除術之病人，至少於術前6月 或術後6個月內，在病歷上記載曾接受全 大腸檢查（大腸鏡檢或直腸鏡加下消化道 鋇劑攝影）之人－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'96%',frac112:'240/250',t113:'90%',r113:'97.2%',frac113:'211/217',t114:'90%',r114:'90%',frac114:'145/160',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-40',no:'40',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】5.結腸癌(Colon Ca)病理期別第III期病人，術 後6 週內接受化學治療－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'75%',r112:'82%',frac112:'34/44',t113:'75%',r113:'81.1%',frac113:'43/53',t114:'75%',r114:'79%',frac114:'23/29',missed:'',t115:'79%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-41',no:'41',cancer:'大腸癌：國健屬(3)+團隊(3)',name:'【非動態核心指標】6.結腸癌臨床期別I-III期且尚未轉移的病人， 必須在至該醫院就醫之日起六個禮拜內， 提供治癒性切除（curative resection)－大腸癌：國健屬(3)+團隊(3)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'115/115',t113:'92%',r113:'96.2%',frac113:'128/133',t114:'92%',r114:'97%',frac114:'72/74',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-42',no:'42',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】1.病人手術後6週內開始輔助治療（放射治療或化學放射治療）的比率。－口腔癌：國健屬(6)',attr:'正',change:'',t112:'90%',r112:'88%',frac112:'21/24',t113:'90%',r113:'96%',frac113:'25/26',t114:'90%',r114:'100%',frac114:'19/19',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-43',no:'43',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】2.病人手術後30天內死亡的比率。－口腔癌：國健屬(6)',attr:'負',change:'',t112:'4%',r112:'0%',frac112:'0/62',t113:'4%',r113:'0%',frac113:'0/64',t114:'3%',r114:'0%',frac114:'0/49',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-44',no:'44',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】3.病人開始接受放射治療(不含化療)後90 天內死亡的比率。－口腔癌：國健屬(6)',attr:'負',change:'',t112:'4%',r112:'0%',frac112:'0/16',t113:'4%',r113:'0%',frac113:'0/12',t114:'3%',r114:'0%',frac114:'0/10',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-45',no:'45',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】4.病人開始接受同步化學治療及放射治療後90 天內死亡的比率。－口腔癌：國健屬(6)',attr:'負',change:'',t112:'4%',r112:'0%',frac112:'0/9',t113:'4%',r113:'0%',frac113:'0/14',t114:'3%',r114:'0%',frac114:'0/8',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-46',no:'46',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】5.病人接受頸部淋巴廓清術，淋巴結病理檢查報告15 顆(含)以上的比率。－口腔癌：國健屬(6)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'40/40',t113:'90%',r113:'91%',frac113:'42/46',t114:'90%',r114:'100%',frac114:'24/24',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-47',no:'47',cancer:'口腔癌：國健屬(6)',name:'【非動態核心指標】6.病理切片為口腔鱗狀細胞癌並施行口腔根除性手術，其病理切緣 小於4mm的比例。－口腔癌：國健屬(6)',attr:'正',change:'',t112:'45%',r112:'37%',frac112:'23/62',t113:'45%',r113:'37%',frac113:'23/63',t114:'45%',r114:'38%',frac114:'18/48',missed:'',t115:'40%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-48',no:'48',cancer:'子宮頸癌：國健屬(5)',name:'【非動態核心指標】1.病理確診為第三級上皮內贅瘤(CIN 3)/子宮頸原位癌(CIS)病人，以子 宮頸錐狀手術為完整治療的比率。－子宮頸癌：國健屬(5)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'55/55',t113:'90%',r113:'93%',frac113:'28/31',t114:'90%',r114:'97%',frac114:'38/39',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-49',no:'49',cancer:'子宮頸癌：國健屬(5)',name:'【非動態核心指標】2.以手術為首次治療的FIGO期別IA2 或以上期別的子宮頸癌病人，其骨 盆腔淋巴結摘除≥12顆的比率。－子宮頸癌：國健屬(5)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'2/2',t113:'95%',r113:'75%',frac113:'4/5',t114:'90%',r114:'100%',frac114:'2/2',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-50',no:'50',cancer:'子宮頸癌：國健屬(5)',name:'【非動態核心指標】3.子宮頸癌患者以放射或合併化學及 放射治療為首次治療者，放射治療 於63天(含)內完成的比率。－子宮頸癌：國健屬(5)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'3/3',t113:'90%',r113:'100%',frac113:'6/6',t114:'90%',r114:'100%',frac114:'8/8',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-51',no:'51',cancer:'子宮頸癌：國健屬(5)',name:'【非動態核心指標】4.子宮頸癌患者以放射或合併化學及 放射治療為首次治療者，其治療包 含近接放射治療的比率。排除子宮 頸癌FIGO期別IVB期別的個案。－子宮頸癌：國健屬(5)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'2/2',t113:'90%',r113:'100%',frac113:'5/5',t114:'90%',r114:'71%',frac114:'5/7',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名病人90歲只採Palliative R/T 1名拒治療'},{id:'m4-52',no:'52',cancer:'子宮頸癌：國健屬(5)',name:'【非動態核心指標】5. FIGO 期別 IB2 或 IIA2~IVA 子宮頸 癌病人以放療為首次治療時，病人 接受同時合併化療的比率。－子宮頸癌：國健屬(5)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'2/2',t113:'90%',r113:'60%',frac113:'3/5',t114:'90%',r114:'67%',frac114:'4/6',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名病人90歲只採Palliative R/T 1名拒治療'},{id:'m4-53',no:'53',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】1. 確診病人，首次治療前（一個月內） 有接受影像（CT、MRI、PET)檢查 的人數－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'97%',frac112:'34/35',t113:'85%',r113:'94%',frac113:'31/33',t114:'82%',r114:'97%',frac114:'33/34',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-54',no:'54',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】2.第一型（type I ）FIGO 期別第 I 或 II 期病人，有接受完整分期手術的比 率－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'25/25',t113:'85%',r113:'100%',frac113:'26/26',t114:'82%',r114:'94%',frac114:'15/16',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-55',no:'55',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】3.第一型（type I ) FIGO 期別第 IB 期 且 grade 3 或第 II 期（扣除接受 radical hysterectomy 手術） 病人 ， 手 術後接受 輔助治療 放射線治 療或化學治療的比率－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'7/7',t113:'85%',r113:'100%',frac113:'2/2',t114:'80%',r114:'100%',frac114:'3/3',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-56',no:'56',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】4.第一型（type I ） FIGO 期別第 IIIIVA 手術病人，術後接受輔助性治療 的比率－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'9/9',t113:'85%',r113:'100%',frac113:'3/3',t114:'82%',r114:'100%',frac114:'5/5',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-57',no:'57',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】5. 病人接受分期手術與術後輔助治療 （化療或放射治療）者，於術後 60 天內開始進行治療的比率－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'9/9',t113:'85%',r113:'93%',frac113:'14/14',t114:'82%',r114:'92%',frac114:'11/12',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-58',no:'58',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】6.第二型（type II ）病人，有接受完 整分期手術的比率－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'2/2',t113:'85%',r113:'100%',frac113:'1/1',t114:'82%',r114:'100%',frac114:'4/4',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-59',no:'59',cancer:'子宮體癌：國健屬(7)',name:'【非動態核心指標】7.第二型（type II ）病人，須接受術 後追加輔助以達治療預期效果－子宮體癌：國健屬(7)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'2/2',t113:'85%',r113:'100%',frac113:'1/1',t114:'82%',r114:'50%',frac114:'2/4',missed:'',t115:'82%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名 拒化療 1名 Clear cell adenocarcinoma, /pFIGO 4B(術後30天內死亡);113.12.12團隊討論: 病人死亡原因，因病情進展，與治療無關'},{id:'m4-60',no:'60',cancer:'軟巢癌：國健屬(3)',name:'【非動態核心指標】1.卵巢惡性腫瘤確診病人，治療前 有接受骨盆腔和腹部電腦斷層 (CT)檢查的比率。－軟巢癌：國健屬(3)',attr:'正',change:'',t112:'90%',r112:'90%',frac112:'19/21',t113:'90%',r113:'100%',frac113:'17/17',t114:'92%',r114:'93%',frac114:'14/15',missed:'',t115:'92%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-61',no:'61',cancer:'軟巢癌：國健屬(3)',name:'【非動態核心指標】2.術後病理診斷為卵巢癌之病患， 首次手術紀錄有詳細記載殘存腫 瘤狀態及大小的比率。－軟巢癌：國健屬(3)',attr:'正',change:'',t112:'90%',r112:'94%',frac112:'16/17',t113:'90%',r113:'100%',frac113:'17/17',t114:'92%',r114:'100%',frac114:'10/10',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-62',no:'62',cancer:'軟巢癌：國健屬(3)',name:'【非動態核心指標】3.術後病理診斷為卵巢癌之病患， 首次手術紀錄無殘存腫瘤狀態及 大小的比率。－軟巢癌：國健屬(3)',attr:'正',change:'',t112:'50%',r112:'58%',frac112:'10/17',t113:'50%',r113:'82%',frac113:'14/17',t114:'50%',r114:'60%',frac114:'6/10',missed:'',t115:'60%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-63',no:'63',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】1.新診斷之攝護腺癌病患診斷前有 無做肛診檢查－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'91%',frac112:'124/137',t113:'85%',r113:'99%',frac113:'145/147',t114:'90%',r114:'97%',frac114:'162/167',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-64',no:'64',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】2.新診斷之攝護腺癌 (adenocarcinoma病人病理組織 確診前3個月內有PSA值的比率－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'134/134',t113:'85%',r113:'99%',frac113:'154/156',t114:'90%',r114:'92%',frac114:'154/167',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-65',no:'65',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】3.局限性低風險病人以 active surveillance, watchful waiting or observation 為初始治療方式 的比率－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'40%',r112:'56%',frac112:'5/9',t113:'40%',r113:'73%',frac113:'9/12',t114:'50%',r114:'70%',frac114:'7/10',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-66',no:'66',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】4.局部侵犯型(Locally advanced, cT3, 4N0,cN1M0)病人接受根治 性攝護腺體外放射線治療,依據每 次劑量及總劑量進行換算生物等 效劑量其原發部位生物等效劑量 (biologically Effective Dose)不 低於 150 Gy 且合併荷爾蒙治療 的比率－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'9/9',t113:'85%',r113:'100%',frac113:'12/12',t114:'90%',r114:'100%',frac114:'10/10',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-67',no:'67',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】5.局部侵犯型(Locally advanced, cT3,4N0,cN1M0)病人接受攝護 腺根除術治療的比率－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'30%',r112:'60%',frac112:'12/20',t113:'35%',r113:'40%',frac113:'12/30',t114:'40%',r114:'37%',frac114:'7/19',missed:'',t115:'40%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA/ 8名採ADT+R/T 1名採ADT+C/T 2名採ADT 1名採HIFU'},{id:'m4-68',no:'68',cancer:'攝護腺癌：國健屬(5)+團隊(1)',name:'【非動態核心指標】6.診斷時之病理標本有標明病理切 片之格里森分數(Gleason Score) 的比率－攝護腺癌：國健屬(5)+團隊(1)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'139/139',t113:'90%',r113:'100%',frac113:'158/158',t114:'92%',r114:'98%',frac114:'163/167',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-69',no:'69',cancer:'膀胱癌：國健屬(3)',name:'【非動態核心指標】1.膀胱癌之經尿道腫瘤切除(TURBT) 標本有描述並看到固有肌肉層 (muscularis propria )的比率－膀胱癌：國健屬(3)',attr:'正',change:'',t112:'80%',r112:'80%',frac112:'45/56',t113:'80%',r113:'98%',frac113:'58/59',t114:'85%',r114:'86%',frac114:'38/44',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-70',no:'70',cancer:'膀胱癌：國健屬(3)',name:'【非動態核心指標】2.接受膀胱切除術(cystectomy治療者 ，完成病理期別的比率－膀胱癌：國健屬(3)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'4/4',t113:'90%',r113:'100%',frac113:'2/2',t114:'95%',r114:'100%',frac114:'3/3',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-71',no:'71',cancer:'膀胱癌：國健屬(3)',name:'【非動態核心指標】3.接受膀胱根除性手術之膀胱癌患中 ，病理報告有呈現骨盆腔左右之淋 巴結(≧10顆)的比率－膀胱癌：國健屬(3)',attr:'正',change:'',t112:'80%',r112:'100%',frac112:'4/4',t113:'90%',r113:'100%',frac113:'2/2',t114:'80%',r114:'67%',frac114:'2/3',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名淋巴取樣3顆 1.non-invasive final pathology 2.回饋給主治醫師'},{id:'m4-72',no:'72',cancer:'惡性淋巴癌：團隊(3)',name:'【非動態核心指標】1.淋巴癌個案，B肝帶原者在治療前 有使用B肝抗病毒藥物－惡性淋巴癌：團隊(3)',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'5/5',t113:'100%',r113:'100%',frac113:'24/24',t114:'100%',r114:'100%',frac114:'9/9',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-73',no:'73',cancer:'惡性淋巴癌：團隊(3)',name:'【非動態核心指標】2.淋巴癌個案，在使用完C/T(最後 一次療程): anthracyclines類藥物 後6個月內，接受心臟超音波檢查 之比率－惡性淋巴癌：團隊(3)',attr:'正',change:'',t112:'80%',r112:'86%',frac112:'12/14',t113:'80%',r113:'88%',frac113:'15/17',t114:'85%',r114:'85%',frac114:'17/20',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m4-74',no:'74',cancer:'惡性淋巴癌：團隊(3)',name:'【非動態核心指標】3.淋巴癌個案，在初診斷時有接受 心臟超音波檢查(使用C/T: anthracyclines類藥物前)之比率－惡性淋巴癌：團隊(3)',attr:'正',change:'',t112:'100%',r112:'100%',frac112:'20/20',t113:'100%',r113:'100%',frac113:'4/4',t114:'100%',r114:'100%',frac114:'24/24',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'m5',name:'M5 動態核心指標',type:'medical',total:13,missed:0,lowered:0,maintained:13,raised:0,basis:'C',indicators:[{id:'m5-1',no:'1',cancer:'大 腸 癌 (1)',name:'【動態核心指標】結腸癌期別III 術後六週內接 受化療－大 腸 癌 (1)',attr:'正',change:'',t112:'75%',r112:'80%',frac112:'41/51',t113:'75%',r113:'91%',frac113:'30/33',t114:'75%',r114:'93%',frac114:'43/46',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'2名年紀大拒化療(86/83) 1名因70歲ECOG:3拒化療'},{id:'m5-2',no:'2',cancer:'肝癌 (2)',name:'【動態核心指標】1. Curative(內科治癒性療法) 或TA(C)E治療後的肝癌病 人，3個月內追蹤影像學 (US or CT or MRI)之比率－肝癌 (2)',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'13/13',t113:'90%',r113:'100%',frac113:'13/13',t114:'92%',r114:'96%',frac114:'50/52',missed:'',t115:'97%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因分析: 1名住澎湖，已衛教至澎湖追蹤/ 1名超過3個月追蹤 改善:NA(已達閾值)'},{id:'m5-3',no:'3',cancer:'肺癌 (2)',name:'【動態核心指標】1.肺癌病理期別第IIIA IIIB期 病人，術後6週內接受輔助 治療（放射或化學或標靶 治療）的比率－肺癌 (2)',attr:'正',change:'',t112:'90%',r112:'80%',frac112:'4/5',t113:'80%',r113:'88%',frac113:'7/8',t114:'80%',r114:'66.6%',frac114:'2/3',missed:'',t115:'57%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名(COPD)Palliative Care'},{id:'m5-4',no:'4',cancer:'肺癌 (2)',name:'【動態核心指標】2.肺癌第 IIIB IIIC期病人接受 同步化學治療及放射治療 (CCRT)比率－肺癌 (2)',attr:'正',change:'',t112:'90%',r112:'89%',frac112:'8/9',t113:'87%',r113:'83%',frac113:'5/6',t114:'87%',r114:'80%',frac114:'4/5',missed:'',t115:'57%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'110、111年執行年成果：92% ( 12/13 )、96% ( 24/25 )，平均值 96%；112年已達閾值85%，本團隊113年閾值往上調90%持續監測'},{id:'m5-5',no:'5',cancer:'胃癌 (6)',name:'【動態核心指標】1.術前討論率－胃癌 (6)',attr:'正',change:'',t112:'50%',r112:'41%',frac112:'15/36',t113:'50%',r113:'38%',frac113:'11/29',t114:'40%',r114:'50%',frac114:'12/24',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m5-6',no:'6',cancer:'胃癌 (6)',name:'【動態核心指標】2.II期術後一年內胃鏡 檢查比率(113年) (112年追蹤期6個月內)－胃癌 (6)',attr:'正',change:'',t112:'90%',r112:'50%',frac112:'2/4',t113:'90%',r113:'100%',frac113:'1/1',t114:'90%',r114:'75%',frac114:'3/4',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'II期:7名尚未滿1年'},{id:'m5-7',no:'7',cancer:'胃癌 (6)',name:'【動態核心指標】2.III期術後一年內胃鏡 檢查比率(113年) (112年追蹤期6個月內)－胃癌 (6)',attr:'正',change:'',t112:'70%',r112:'57%',frac112:'4/7',t113:'70%',r113:'100%',frac113:'1/1',t114:'70%',r114:'100%',frac114:'3/3',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'III期:9名尚未滿1年'},{id:'m5-8',no:'8',cancer:'胃癌 (6)',name:'【動態核心指標】3. III期接受新輔助性化療比率(113年) (112年II-III期)－胃癌 (6)',attr:'正',change:'',t112:'30%',r112:'15%',frac112:'3/19',t113:'20%',r113:'20%',frac113:'1/5',t114:'20%',r114:'45%',frac114:'5/11',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m5-9',no:'9',cancer:'胃癌 (6)',name:'【動態核心指標】4.術前營養照護涵 蓋率－胃癌 (6)',attr:'正',change:'',t112:'60%',r112:'93%',frac112:'31/33',t113:'80%',r113:'38%',frac113:'9/24',t114:'80%',r114:'70%',frac114:'16/23',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'原因分析: 4名醫師未會診 1名因急診入stomach rupture直接入OR室開刀， 故來不及會診營養師 ２名因住院後隔天開刀，故來不及會診營養師'},{id:'m5-10',no:'10',cancer:'胃癌 (6)',name:'【動態核心指標】5.營養照護涵蓋率 僅接受手術者術 後至少1次－胃癌 (6)',attr:'正',change:'',t112:'70%',r112:'100%',frac112:'32/32',t113:'80%',r113:'83%',frac113:'20/24',t114:'80%',r114:'100%',frac114:'22/22',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m5-11',no:'11',cancer:'胃癌 (6)',name:'【動態核心指標】6.營養照護涵蓋率 化療3個月內接受 營養評估－胃癌 (6)',attr:'正',change:'',t112:'70%',r112:'70%',frac112:'18/26',t113:'70%',r113:'80%',frac113:'12/15',t114:'75%',r114:'85%',frac114:'11/13',missed:'',t115:'50%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m5-12',no:'12',cancer:'AYA (2)',name:'【動態核心指標】◆ AYA-15-39歲初診 斷癌症病人，有接 受需求評估比率－AYA (2)',attr:'正',change:'',t112:'80%',r112:'74%',frac112:'46/62',t113:'80%',r113:'80%',frac113:'35/44',t114:'80%',r114:'71%',frac114:'41/58',missed:'',t115:'71%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'17名未接受評估 原因：1.晚診及假日診 2.個管、心理師人力不足。 改善：1.對於晚診與假日診之病人,加強電訪'},{id:'m5-13',no:'13',cancer:'AYA (2)',name:'【動態核心指標】◆ AYA-15-39歲初診 斷癌症病人，有諮 詢需求者轉介比率－AYA (2)',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'17/17',t113:'90%',r113:'91%',frac113:'10/11',t114:'90%',r114:'92%',frac114:'12/13',missed:'',t115:'71%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'m6',name:'M6 個案失聯率',type:'medical',total:17,missed:0,lowered:0,maintained:17,raised:0,basis:'C',indicators:[{id:'m6-1',no:'1',cancer:'乳癌',name:'個案失聯綠－乳癌',attr:'負',change:'',t112:'1%',r112:'35%',frac112:'1/289',t113:'1%',r113:'0%',frac113:'0/281',t114:'1%',r114:'1.4%',frac114:'4/281',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'4名未接聽電話'},{id:'m6-2',no:'2',cancer:'大腸癌',name:'個案失聯綠－大腸癌',attr:'負',change:'',t112:'3%',r112:'40%',frac112:'1/226',t113:'3%',r113:'30%',frac113:'1/256',t114:'3%',r114:'1.3%',frac114:'3/232',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'3名未接聽電話'},{id:'m6-3',no:'3',cancer:'胃癌',name:'個案失聯綠－胃癌',attr:'負',change:'',t112:'5%',r112:'0%',frac112:'0/40',t113:'3%',r113:'0%',frac113:'0/31',t114:'3%',r114:'0%',frac114:'0/49',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m6-4',no:'4',cancer:'肝癌',name:'個案失聯綠－肝癌',attr:'負',change:'',t112:'2%',r112:'0%',frac112:'0/62',t113:'1%',r113:'0%',frac113:'0/63',t114:'1%',r114:'2.2%',frac114:'1/45',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名未接聽電話'},{id:'m6-5',no:'5',cancer:'胰臟癌',name:'個案失聯綠－胰臟癌',attr:'負',change:'',t112:'15%',r112:'0%',frac112:'0/9',t113:'5%',r113:'0%',frac113:'0/28',t114:'5%',r114:'75%',frac114:'1/132',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'113年已達閾值5%，依據過去三年平均0%，團隊會議決議114年 維持原閾值。'},{id:'m6-6',no:'6',cancer:'膽管(囊)癌',name:'個案失聯綠－膽管(囊)癌',attr:'負',change:'',t112:'10%',r112:'0%',frac112:'0/6',t113:'5%',r113:'1%',frac113:'1/10',t114:'5%',r114:'0%',frac114:'0/18',missed:'',t115:'5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-7',no:'7',cancer:'膀胱癌',name:'個案失聯綠－膀胱癌',attr:'負',change:'',t112:'2%',r112:'1%',frac112:'1/51',t113:'2%',r113:'2%',frac113:'1/53',t114:'2%',r114:'1.8%',frac114:'1/55',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名失聯原因，獨居， 電話號碼均為同事與鄰居的號碼'},{id:'m6-8',no:'8',cancer:'攝護腺癌',name:'個案失聯綠－攝護腺癌',attr:'負',change:'',t112:'2%',r112:'83%',frac112:'1/120',t113:'2%',r113:'1.4%',frac113:'2/146',t114:'2%',r114:'0%',frac114:'0/152',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-9',no:'9',cancer:'鼻咽癌',name:'個案失聯綠－鼻咽癌',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/15',t113:'2%',r113:'0%',frac113:'0/18',t114:'2%',r114:'0%',frac114:'0/10',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-10',no:'10',cancer:'頭頸癌',name:'個案失聯綠－頭頸癌',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/87',t113:'2%',r113:'0%',frac113:'0/74',t114:'2%',r114:'0%',frac114:'0/97',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-11',no:'11',cancer:'肺癌',name:'個案失聯綠－肺癌',attr:'負',change:'',t112:'1%',r112:'0%',frac112:'0/222',t113:'1%',r113:'60%',frac113:'1/153',t114:'1%',r114:'1.6%',frac114:'2/124',missed:'',t115:'1%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'2名未接聽電話'},{id:'m6-12',no:'12',cancer:'子宮體癌',name:'個案失聯綠－子宮體癌',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/36',t113:'3%',r113:'2%',frac113:'1/46',t114:'2%',r114:'0%',frac114:'0/38',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-13',no:'13',cancer:'子宮頸癌',name:'個案失聯綠－子宮頸癌',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/12',t113:'3%',r113:'0%',frac113:'0/19',t114:'2%',r114:'0%',frac114:'0/15',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-14',no:'14',cancer:'卵巢癌',name:'個案失聯綠－卵巢癌',attr:'負',change:'',t112:'3%',r112:'0%',frac112:'0/20',t113:'3%',r113:'0%',frac113:'0/18',t114:'2%',r114:'0%',frac114:'0/29',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-15',no:'15',cancer:'食道癌',name:'個案失聯綠－食道癌',attr:'負',change:'',t112:'5%',r112:'0%',frac112:'0/30',t113:'4%',r113:'6%',frac113:'1/16',t114:'4%',r114:'0%',frac114:'0/11',missed:'',t115:'3%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-16',no:'16',cancer:'血液暨 淋巴癌',name:'個案失聯綠－血液暨 淋巴癌',attr:'負',change:'',t112:'3%',r112:'1.9%',frac112:'1/54',t113:'3%',r113:'2.5%',frac113:'2/81',t114:'3%',r114:'0%',frac114:'0/49',missed:'',t115:'2%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'},{id:'m6-17',no:'17',cancer:'甲狀腺癌',name:'個案失聯綠－甲狀腺癌',attr:'負',change:'',t112:'1%',r112:'0%',frac112:'0/104',t113:'1%',r113:'0%',frac113:'0/61',t114:'1%',r114:'0%',frac114:'0/74',missed:'',t115:'0.5%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'NA'}]},{id:'m7',name:'M7 留治率',type:'medical',total:17,missed:0,lowered:0,maintained:17,raised:0,basis:'C',indicators:[{id:'m7-1',no:'1',cancer:'乳癌',name:'留 治 率－乳癌',attr:'正',change:'',t112:'90%',r112:'83.3%',frac112:'310/372',t113:'85%',r113:'82%',frac113:'281/344',t114:'85%',r114:'79%',frac114:'300/380',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1.未透漏原因 2.親友推薦 3.地緣因素:離家近 4.特定需求:尋求手術、器官移植、不滿意原診斷時程 、延續原治療。 5.境外 / 返國治療 6.未治療 / 死亡 / 體況差'},{id:'m7-2',no:'2',cancer:'大腸癌',name:'留 治 率－大腸癌',attr:'正',change:'',t112:'85%',r112:'90.4%',frac112:'282/312',t113:'85%',r113:'87.7%',frac113:'250/285',t114:'85%',r114:'95%',frac114:'249/261',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:12名轉院:台大3、北榮3、北醫1、亞東2、高榮1、新光1、土庚1'},{id:'m7-3',no:'3',cancer:'胃癌',name:'留 治 率－胃癌',attr:'正',change:'',t112:'80%',r112:'79.7%',frac112:'51/64',t113:'80%',r113:'79.7%',frac113:'55/69',t114:'80%',r114:'90%',frac114:'66/73',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析： 2名轉台大、1名轉亞東、1名轉北榮、1名轉北醫 1名轉土城長庚'},{id:'m7-4',no:'4',cancer:'肝癌',name:'留 治 率－肝癌',attr:'正',change:'',t112:'90%',r112:'89.5%',frac112:'94/105',t113:'90%',r113:'91.1%',frac113:'72/79',t114:'90%',r114:'87%',frac114:'74/85',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:7名轉院:台大2、北榮2、台大癌醫1亞東1、博仁1;拒治療 檢討:1.已於114年7月29日由團隊進行報告與說明。2.（1）強化醫療品牌能見度與專業度認知（2）提升初診與治療溝通品質:（3）針對治療能力疑慮的補強措施（4）持續追蹤與回饋機制'},{id:'m7-5',no:'5',cancer:'胰臟癌',name:'留 治 率－胰臟癌',attr:'正',change:'',t112:'90%',r112:'90.6%',frac112:'29/32',t113:'90%',r113:'80.7%',frac113:'42/52',t114:'90%',r114:'75%',frac114:'30/40',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:10名轉院:台大3、北榮3、慈濟2、高長1、恩主公1'},{id:'m7-6',no:'6',cancer:'膽管(囊)癌',name:'留 治 率－膽管(囊)癌',attr:'正',change:'',t112:'90%',r112:'77.8%',frac112:'7/9',t113:'90%',r113:'76.9%',frac113:'20/26',t114:'90%',r114:'97%',frac114:'29/30',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m7-7',no:'7',cancer:'膀胱癌',name:'留 治 率－膀胱癌',attr:'正',change:'',t112:'90%',r112:'93.3%',frac112:'50/60',t113:'90%',r113:'95%',frac113:'57/60',t114:'90%',r114:'95%',frac114:'59/60',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:1名轉台大'},{id:'m7-8',no:'8',cancer:'攝護腺癌',name:'留 治 率－攝護腺癌',attr:'正',change:'',t112:'90%',r112:'88.2%',frac112:'135/153',t113:'90%',r113:'88%',frac113:'150/171',t114:'90%',r114:'92%',frac114:'160/173',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:13名轉院 7名台大、1名和信、1名榮總、1名馬偕、1名慈濟 1名聯新、1名透漏醫院'},{id:'m7-9',no:'9',cancer:'鼻咽癌',name:'留 治 率－鼻咽癌',attr:'正',change:'',t112:'75%',r112:'77.8%',frac112:'21/27',t113:'75%',r113:'71%',frac113:'15/21',t114:'75%',r114:'67%',frac114:'14/21',missed:'',t115:'70%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析原因：診斷21位、6位轉院、1位拒絕治療 轉出時機：切片後轉出4位、分期檢查後轉出2位。（切片後即轉出的比率佔2/3 ） 轉出院所：2位台大、1位長庚、1位北榮、1位國泰、1位拒絕透露 改善：1.優化診斷期的流程：病人於耳鼻喉科門診看切片報告時，醫師提供病人後續治療的相關資訊，並通知頭頸癌個管師，邀請病人加入個管師Line，在恐懼期得到相對的資訊和支持。針對住院檢查病人，入院後便通知放腫科及血液腫瘤科醫師，在檢查期間便可先接觸關懷病人，也可提前掌握病人檢查流程，即時和耳鼻喉科醫師安排一起同埸病解，即時提供完整治療規劃，可讓病人及家屬感受到團隊照顧的專業性和效率。2.建立本院鼻咽癌特色治療：北醫有質子治療，本院有立體定位放射手術治療Versa HD加速器。'},{id:'m7-10',no:'10',cancer:'頭頸癌',name:'留 治 率－頭頸癌',attr:'正',change:'',t112:'80%',r112:'82.3%',frac112:'130/158',t113:'80%',r113:'82%',frac113:'130/158',t114:'80%',r114:'79%',frac114:'117/149',missed:'',t115:'82%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:32名流失個案 0-1:29位(台大10、拒絕透露5、長庚4、亞東2、萬芳1、慈濟1、高醫1、仁愛1、附醫1、和信1、北榮1、大陸1) 、0-2:1位、0-3:2位'},{id:'m7-11',no:'11',cancer:'肺癌',name:'留 治 率－肺癌',attr:'正',change:'',t112:'88%',r112:'84.8%',frac112:'217/256',t113:'88%',r113:'84%',frac113:'215/256',t114:'88%',r114:'88%',frac114:'275/313',missed:'',t115:'88%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m7-12',no:'12',cancer:'子宮體癌',name:'留 治 率－子宮體癌',attr:'正',change:'',t112:'90%',r112:'84.9%',frac112:'45/53',t113:'90%',r113:'85%',frac113:'46/54',t114:'90%',r114:'90%',frac114:'46/51',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m7-13',no:'13',cancer:'子宮頸癌',name:'留 治 率－子宮頸癌',attr:'正',change:'',t112:'90%',r112:'85.7%',frac112:'18/21',t113:'85%',r113:'76%',frac113:'19/25',t114:'85%',r114:'80%',frac114:'20/25',missed:'',t115:'80%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:5名轉院:台大1、慈濟1、林長1、台中童綜合1、回國(印尼)1 檢討:1.已於114年7月29日由團隊進行報告與說明。2.對於新診斷個案，將於確診後即時通知個案管理師，由個管師直接當面或以電話聯繫病人，提供完整說明與關懷，以提升病人留院治療之意願與留院率。'},{id:'m7-14',no:'14',cancer:'卵巢癌',name:'留 治 率－卵巢癌',attr:'正',change:'',t112:'90%',r112:'92%',frac112:'23/25',t113:'96%',r113:'100%',frac113:'18/18',t114:'96%',r114:'95%',frac114:'21/22',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m7-15',no:'15',cancer:'食道癌',name:'留 治 率－食道癌',attr:'正',change:'',t112:'85%',r112:'82.8%',frac112:'29/35',t113:'85%',r113:'83%',frac113:'29/35',t114:'85%',r114:'86%',frac114:'30/35',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m7-16',no:'16',cancer:'血液暨 淋巴癌',name:'留 治 率－血液暨 淋巴癌',attr:'正',change:'',t112:'85%',r112:'91%',frac112:'91/100',t113:'85%',r113:'83%',frac113:'81/98',t114:'85%',r114:'80%',frac114:'76/95',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:14名轉院:台大3、癌醫3、三總1、北榮3、和信1、林長1、 土長1、拒透漏1名拒治療 檢討:1.已於114年11月17日由團隊進行報告與說明。2.（1）強化醫療品牌能見度與專業度認知（2）提升初診與治療溝通品質:（3）針對治療能力疑慮的補強措施（4）持續追蹤與回饋機制'},{id:'m7-17',no:'17',cancer:'甲狀腺癌',name:'留 治 率－甲狀腺癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'84/84',t113:'96%',r113:'100%',frac113:'84/84',t114:'96%',r114:'97%',frac114:'74/76',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]},{id:'m8',name:'M8 完治率',type:'medical',total:17,missed:0,lowered:0,maintained:17,raised:0,basis:'C',indicators:[{id:'m8-1',no:'1',cancer:'乳癌',name:'完 治 率－乳癌',attr:'正',change:'',t112:'98%',r112:'90.4%',frac112:'188/208',t113:'90%',r113:'90%',frac113:'150/166',t114:'90%',r114:'90%',frac114:'215/228',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-2',no:'2',cancer:'大腸癌',name:'完 治 率－大腸癌',attr:'正',change:'',t112:'85%',r112:'90.9%',frac112:'120/132',t113:'80%',r113:'94%',frac113:'149/159',t114:'80%',r114:'87%',frac114:'141/162',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-3',no:'3',cancer:'胃癌',name:'完 治 率－胃癌',attr:'正',change:'',t112:'85%',r112:'82.8%',frac112:'24/29',t113:'85%',r113:'96.5%',frac113:'28/29',t114:'87%',r114:'100%',frac114:'25/25',missed:'',t115:'87%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-4',no:'4',cancer:'肝癌',name:'完 治 率－肝癌',attr:'正',change:'',t112:'80%',r112:'94.2%',frac112:'65/69',t113:'85%',r113:'88.5%',frac113:'46/52',t114:'85%',r114:'100%',frac114:'46/46',missed:'',t115:'94%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-5',no:'5',cancer:'胰臟癌',name:'完 治 率－胰臟癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'11/11',t113:'85%',r113:'100%',frac113:'37/37',t114:'88%',r114:'100%',frac114:'10/10',missed:'',t115:'100%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-6',no:'6',cancer:'膽管(囊)癌',name:'完 治 率－膽管(囊)癌',attr:'正',change:'',t112:'85%',r112:'100%',frac112:'11/11',t113:'85%',r113:'100%',frac113:'18/18',t114:'88%',r114:'93.8%',frac114:'15/16',missed:'',t115:'98%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-7',no:'7',cancer:'膀胱癌',name:'完 治 率－膀胱癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'40/40',t113:'95%',r113:'100%',frac113:'40/40',t114:'95%',r114:'100%',frac114:'33/33',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-8',no:'8',cancer:'攝護腺癌',name:'完 治 率－攝護腺癌',attr:'正',change:'',t112:'90%',r112:'98.8%',frac112:'85/86',t113:'95%',r113:'99%',frac113:'103/104',t114:'95%',r114:'99%',frac114:'106/107',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-9',no:'9',cancer:'鼻咽癌',name:'完 治 率－鼻咽癌',attr:'正',change:'',t112:'90%',r112:'100%',frac112:'18/18',t113:'93%',r113:'100%',frac113:'19/19',t114:'93%',r114:'92%',frac114:'11/12',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'1名病人於治療中死亡（團隊於2024.11.20討論病人因反覆肺炎死亡，死亡與治療處置不相關，未來年長，複雜共病者，會診相關科別共照)'},{id:'m8-10',no:'10',cancer:'頭頸癌',name:'完 治 率－頭頸癌',attr:'正',change:'',t112:'90%',r112:'92.5%',frac112:'87/94',t113:'93%',r113:'93%',frac113:'100/107',t114:'93%',r114:'95%',frac114:'90/95',missed:'',t115:'93%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-11',no:'11',cancer:'肺癌',name:'完 治 率－肺癌',attr:'正',change:'',t112:'80%',r112:'90.7%',frac112:'88/97',t113:'80%',r113:'96%',frac113:'64/67',t114:'85%',r114:'95%',frac114:'92/97',missed:'',t115:'90%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-12',no:'12',cancer:'子宮體癌',name:'完 治 率－子宮體癌',attr:'正',change:'',t112:'95%',r112:'93.1%',frac112:'27/29',t113:'95%',r113:'92.7%',frac113:'38/41',t114:'87%',r114:'100%',frac114:'38/38',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-13',no:'13',cancer:'子宮頸癌',name:'完 治 率－子宮頸癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'10/10',t113:'96%',r113:'89.5%',frac113:'17/19',t114:'85%',r114:'100%',frac114:'9/9',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-14',no:'14',cancer:'卵巢癌',name:'完 治 率－卵巢癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'19/19',t113:'96%',r113:'100%',frac113:'18/18',t114:'87%',r114:'92%',frac114:'11/12',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'分析:1名拒Debulking operation 改善:1.尊重病人決定，病歷有記載不遵循原因。/2.114年7月29日團隊宣導'},{id:'m8-15',no:'15',cancer:'食道癌',name:'完 治 率－食道癌',attr:'正',change:'',t112:'90%',r112:'92.8%',frac112:'13/14',t113:'90%',r113:'93%',frac113:'14/15',t114:'91%',r114:'100%',frac114:'16/16',missed:'',t115:'95%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:'已排除IV期病人'},{id:'m8-16',no:'16',cancer:'血液暨 淋巴癌',name:'完 治 率－血液暨 淋巴癌',attr:'正',change:'',t112:'85%',r112:'80%',frac112:'16/20',t113:'88%',r113:'90%',frac113:'9/10',t114:'90%',r114:'87%',frac114:'13/15',missed:'',t115:'85%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''},{id:'m8-17',no:'17',cancer:'甲狀腺癌',name:'完 治 率－甲狀腺癌',attr:'正',change:'',t112:'95%',r112:'100%',frac112:'84/84',t113:'96%',r113:'100%',frac113:'84/84',t114:'96%',r114:'100%',frac114:'73/73',missed:'',t115:'96%',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''}]}];
+
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+var MEETING_LINKS = {}; // runtime-populated
+var _bakedGroups = null; // filled by exportSurveyFile()
+var _sheetUrl = ''; // filled by exportSurveyFile()
+
+let state={name:'',role:'',currentGroup:0,groups:[],responses:{},adminLinks:{}};
+
+function getGroups(){
+  // If dispatched survey (baked), return as-is (already filtered by admin)
+  if(_bakedGroups) return _bakedGroups;
+  var ag=EDIT_DATA||GROUPS;
+  return ag.filter(function(g){return g.type===state.role;});
+}
+
+// ══════════════════════════════════════════════════════
+// LANDING
+// ══════════════════════════════════════════════════════
+// ── Role locked: 醫療委員 第2組 ──
+state.role = 'medical';
+
+function onNameChange(){
+  state.name = document.getElementById('input-name').value;
+  state.role = 'medical';
+  document.getElementById('btn-start').disabled = !state.name;
+}
+function checkStart(){
+  document.getElementById('btn-start').disabled = !state.name;
+}
+function startSurvey(){
+  state.role = 'medical';
+  if(!state.name) return;
+  state.groups = getGroups();
+  state.currentGroup = 0;
+  document.getElementById('user-badge').textContent = state.name;
+  // Try to restore previous session
+  var restored = loadAutosave();
+  renderSurvey();
+  showPage('survey');
+  if(restored) { renderSurvey(); } // re-render with restored data
+}
+
+// ══════════════════════════════════════════════════════
+// SURVEY
+// ══════════════════════════════════════════════════════
+function renderSurvey(){
+  const g=state.groups[state.currentGroup];
+  document.getElementById('survey-body').innerHTML=buildGroupHTML(g);
+  updateNav();
+  // restore saved
+  g.indicators.forEach(ind=>{
+    const r=state.responses[ind.id];
+    if(!r) return;
+    if(r.analyAgree===true) selectVoteBtn(ind.id,'analy',true);
+    if(r.analyAgree===false){
+      selectVoteBtn(ind.id,'analy',false);
+      showDisagreeSub(ind.id,'analy');
+      if(r.analySubIdx!==undefined) selectSubOpt(ind.id,'analy',r.analySubIdx,false);
+    }
+    if(r.threshAgree===true) selectVoteBtn(ind.id,'thresh',true);
+    if(r.threshAgree===false){
+      selectVoteBtn(ind.id,'thresh',false);
+      showDisagreeSub(ind.id,'thresh');
+      if(r.threshSubIdx!==undefined) selectSubOpt(ind.id,'thresh',r.threshSubIdx,false);
+    }
+    const ta=document.getElementById('comment-'+ind.id);
+    if(ta&&r.comment) ta.value=r.comment;
+    if(r.done) markDone(ind.id);
+  });
+}
+
+function buildGroupHTML(g){
+  // Compute stats from indicator data
+  var missedCount=0, loweredCount=0, maintainedCount=0, raisedCount=0;
+  g.indicators.forEach(function(ind){
+    var attr=ind.attr||'正';
+    // 114年未達閾值 = r114 vs t114
+    try {
+      var r114v=parseFloat(String(ind.r114||'').replace(/[^\d\.]/g,''));
+      var t114v=parseFloat(String(ind.t114||'').replace(/[^\d\.]/g,''));
+      if(!isNaN(r114v)&&!isNaN(t114v)){
+        var missed=(attr==='負')?(r114v>t114v):(r114v<t114v);
+        if(missed) missedCount++;
+      }
+    } catch(e){}
+    // 115年閾值調整 = t115 vs t114
+    try {
+      var t115v=parseFloat(String(ind.t115||'').replace(/[^\d\.]/g,''));
+      var t114v2=parseFloat(String(ind.t114||'').replace(/[^\d\.]/g,''));
+      if(!isNaN(t115v)&&!isNaN(t114v2)){
+        if(t115v<t114v2) loweredCount++;
+        else if(t115v>t114v2) raisedCount++;
+        else maintainedCount++;
+      } else { maintainedCount++; }
+    } catch(e){ maintainedCount++; }
+  });
+  g.missed=missedCount; g.lowered=loweredCount; g.maintained=maintainedCount; g.raised=raisedCount;
+  const adjClass=(v)=>({down:'s-down',keep:'s-keep',up:'s-up'}[v]||'');
+  let html=`<div class="section-page">
+  <div class="section-header">
+    <div class="section-title-row">
+      <span class="section-tag">第 ${state.currentGroup+1}項 / 共 ${state.groups.length}項</span>
+      <span class="section-name">${g.name}</span>
+      ${(function(){var _u=MEETING_LINKS[g.id]||'';return _u?'<a href="'+_u+'" target="_blank" style="margin-left:6px;background:#006D77;color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;white-space:nowrap">📎 會議紀錄</a>':'';})()}
+    </div>
+    <div class="section-meta">總指標數：${g.total} ｜ 未達閾值：${g.missed} ｜ 設定依據：${g.basis}</div>
+    <div class="stat-row">
+      <div class="stat-box s-miss"><div class="stat-box-val">${g.missed}</div><div class="stat-box-label">114年未達閾值 項</div></div>
+      <div class="stat-box s-down"><div class="stat-box-val">${g.lowered}</div><div class="stat-box-label">115閾值下修 項</div></div>
+      <div class="stat-box s-keep" style="background:#EFF6FF;border-color:#BFDBFE"><div class="stat-box-val" style="color:#1D4ED8">${g.maintained}</div><div class="stat-box-label">115閾值維持 項</div></div>
+      <div class="stat-box s-up"><div class="stat-box-val">${g.raised}</div><div class="stat-box-label">115閾值上調 項</div></div>
+    </div>
+  </div>
+  <div id="valert-${g.id}" class="validation-alert">⚠️ 請完成所有標示項目後再繼續</div>`;
+  g.indicators.forEach(ind=>{ html+=buildCard(ind); });
+  html+=`</div>`;
+  return html;
+}
+
+function buildCard(ind){
+  const adjLbl={'down':'閾值下調','keep':'閾值維持','up':'閾值上調'}[ind.adj]||'';
+  const adjCls={'down':'down','keep':'keep','up':'up'}[ind.adj]||'';
+  const bFull=TB[ind.basis]||ind.basis;
+  const rFull=AR[ind.reason]||ind.reason;
+  const analySubs=DISAGREE_ANALY.map((t,i)=>`<button class="sub-opt" id="sub-analy-${ind.id}-${i}" onclick="selectSubOpt('${ind.id}','analy',${i},true)"><span class="sub-opt-dot"></span>${t}</button>`).join('');
+  const threshSubs=DISAGREE_THRESH.map((t,i)=>`<button class="sub-opt" id="sub-thresh-${ind.id}-${i}" onclick="selectSubOpt('${ind.id}','thresh',${i},true)"><span class="sub-opt-dot"></span>${t}</button>`).join('');
+
+  var _cardLink = MEETING_LINKS[ind.id] || '';
+  var _meetingLnk = MEETING_LINKS[ind.id] || (state.adminLinks[ind.id] || '');
+  var _meetingBtnHtml = _meetingLnk
+    ? '<a href="' + _meetingLnk + '" target="_blank" '
+      + 'style="display:inline-flex;align-items:center;gap:6px;background:#006D77;color:#fff;'
+      + 'font-size:13px;font-weight:700;padding:7px 18px;border-radius:8px;text-decoration:none;margin-left:8px">'
+      + '📎 開啟會議紀錄</a>'
+    : '';
+  return `
+<div class="indicator-card" id="card-${ind.id}">
+  <div class="indicator-header">
+    <span class="indicator-num">${ind.no}</span>
+    <span class="indicator-name">${ind.change ? '<span class="change-badge ' + (ind.change.includes('刪除') ? 'del' : ind.change.includes('115') ? 'new115' : 'new') + '\">' + ind.change + '</span> ' : ''}${ind.name}</span>
+    ${_cardLink ? `<a href="${_cardLink}" target="_blank" style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;background:#006D77;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;text-decoration:none;white-space:nowrap">📎 會議紀錄</a>` : ''}
+  </div>
+  <div class="indicator-stats">
+    <div style="grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:6px">
+      <div style="font-size:13px;font-weight:800;color:var(--teal-dark);padding:4px 0 6px;border-bottom:2px solid var(--teal)">閾值</div>
+      <div style="font-size:13px;font-weight:800;color:var(--teal-dark);padding:4px 0 6px;border-bottom:2px solid var(--teal)">執行結果</div>
+      <div style="font-size:13px;font-weight:800;color:var(--teal-dark);padding:4px 0 6px;border-bottom:2px solid var(--teal)">分子/分母</div>
+    </div>
+    <div style="grid-column:1/-1;font-size:11px;font-weight:700;color:var(--gray);padding:3px 0;background:#F9FAFB;margin:0 -2px;padding-left:4px;border-radius:4px">112 年</div>
+    <div class="istat"><div class="istat-val">${ind.t112||'—'}</div></div>
+    <div class="istat"><div class="istat-val ${isMissed(ind.r112,ind.t112)?'red':''}">${ind.r112||'—'}</div></div>
+    <div class="istat"><div class="istat-val muted" style="font-weight:700">${ind.frac112||'—'}</div></div>
+    <div style="grid-column:1/-1;font-size:11px;font-weight:700;color:var(--gray);padding:3px 0;background:#F9FAFB;margin:0 -2px;padding-left:4px;border-radius:4px">113 年</div>
+    <div class="istat"><div class="istat-val ${(ind.t113&&ind.t112&&ind.t113!==ind.t112)?'blue':''}">${ind.t113||'—'}</div></div>
+    <div class="istat"><div class="istat-val ${isMissed(ind.r113,ind.t113)?'red':''}">${ind.r113||'—'}</div></div>
+    <div class="istat"><div class="istat-val muted" style="font-weight:700">${ind.frac113||'—'}</div></div>
+    <div style="grid-column:1/-1;font-size:11px;font-weight:700;color:var(--gray);padding:3px 0;background:#F9FAFB;margin:0 -2px;padding-left:4px;border-radius:4px">114 年</div>
+    <div class="istat"><div class="istat-val ${(ind.t114&&ind.t113&&ind.t114!==ind.t113)?'blue':''}">${ind.t114||'—'}</div></div>
+    <div class="istat"><div class="istat-val ${isMissed(ind.r114,ind.t114)?'red':''}">${ind.r114||'—'}</div></div>
+    <div class="istat"><div class="istat-val muted" style="font-weight:700">${ind.frac114||'—'}</div></div>
+    <div style="grid-column:1/-1;font-size:11px;font-weight:700;color:#B45309;padding:3px 0;background:#FFF9EC;margin:0 -2px;padding-left:4px;border-radius:4px;border-top:1px solid var(--border);margin-top:4px">115 年</div>
+    <div class="istat" style="border:2px solid var(--teal-light);background:var(--teal-bg)"><div class="istat-val ${(ind.t115&&ind.t114&&ind.t115!==ind.t114)?'blue':''}" style="font-weight:800">${ind.t115||'—'}</div></div>
+    <div class="istat"><div class="istat-val ${isMissed(ind.r115,ind.t115)?'red':''}">${ind.r115||'—'}</div></div>
+    <div class="istat"><div class="istat-val muted" style="font-weight:700">${ind.frac115||'—'}</div></div>
+    <div style="grid-column:1/-1;background:#F8FAFB;display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:6px 8px;border-radius:4px;font-size:13px">
+      <span><b style="color:var(--gray);font-weight:600">設定依據</b>：${ind.basis}：${bFull}</span>
+      <span><b style="color:var(--gray);font-weight:600">調整原因</b>：${ind.reason}：${rFull}</span>
+    </div>
+  </div>
+  <div class="analysis-section">
+    <div class="analysis-title">114年未達閾值分析及改善 <span style="font-size:14px;font-weight:600;color:#006D77">（團隊提供）</span></div>
+    <div class="analysis-text"><span class="year-tag">${ind.missed}年</span>${ind.analysis.replace(/\n/g,'<br>')}</div>
+  </div>
+  <div class="voting-section">
+    <div class="vote-block">
+      <div class="vote-question">📋 會議記錄是否討論此指標？</div>
+      <div class="vote-options">
+        <button class="vote-btn agree" id="vbtn-disc-yes-${ind.id}" onclick="castDiscVote('${ind.id}',true)">✔ 是</button>
+        <button class="vote-btn disagree" id="vbtn-disc-no-${ind.id}" onclick="castDiscVote('${ind.id}',false)">✘ 否</button>
+        ${(function(){ var lk=MEETING_LINKS[ind.id]||(state.adminLinks[ind.id]||""); return lk ? '<div class="vote-block" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0"><span style="font-size:14px;font-weight:700;color:var(--teal-dark)">📋 會議紀錄</span><a href="'+lk+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#006D77;color:#fff;font-size:13px;font-weight:700;padding:7px 18px;border-radius:8px;text-decoration:none">📎 開啟連結</a></div>' : ""; })()}
+      </div>
+    </div>
+    <div class="vote-block">
+      <div class="vote-question">✍️ 114年未達閾值分析及改善，內容是否合理？</div>
+      <div class="vote-options">
+        <button class="vote-btn agree" id="vbtn-analy-agree-${ind.id}" onclick="castVote('${ind.id}','analy',true)">✔ 合理</button>
+        <button class="vote-btn disagree" id="vbtn-analy-dis-${ind.id}" onclick="castVote('${ind.id}','analy',false)">✘ 不合理</button>
+      </div>
+      <div class="disagree-sub" id="dsub-analy-${ind.id}">
+        <div class="disagree-sub-label">請選擇不合理的原因：</div>
+        <div class="sub-options">
+          ${analySubs}
+          <button class="sub-opt" id="sub-analy-${ind.id}-3" onclick="selectSubOpt('${ind.id}','analy',3,true)"><span class="sub-opt-dot"></span>其他（請於下方意見欄說明）</button>
+        </div>
+      </div>
+    </div>
+    <div class="vote-block">
+      <div class="vote-question">📊 115年閾值調整（${adjLbl}）的合理性？</div>
+      <div class="vote-options">
+        <button class="vote-btn agree" id="vbtn-thresh-agree-${ind.id}" onclick="castVote('${ind.id}','thresh',true)">✔ 合理</button>
+        <button class="vote-btn disagree" id="vbtn-thresh-dis-${ind.id}" onclick="castVote('${ind.id}','thresh',false)">✘ 不合理</button>
+      </div>
+      <div class="disagree-sub" id="dsub-thresh-${ind.id}">
+        <div class="disagree-sub-label">請選擇不合理的原因：</div>
+        <div class="sub-options">
+          ${threshSubs}
+          <button class="sub-opt" id="sub-thresh-${ind.id}-3" onclick="selectSubOpt('${ind.id}','thresh',3,true)"><span class="sub-opt-dot"></span>其他（請於下方意見欄說明）</button>
+        </div>
+      </div>
+    </div>
+    <div class="vote-comment">
+      <label>💬 其他意見（選填）：</label>
+      <textarea id="comment-${ind.id}" placeholder="如有補充意見或建議，請填寫於此..." onblur="saveComment('${ind.id}',this.value)"></textarea>
+    </div>
+  </div>
+</div>`;
+}
+
+// ══════════════════════════════════════════════════════
+// VOTE LOGIC
+// ══════════════════════════════════════════════════════
+function castVote(iid,type,agree){
+  if(!state.responses[iid]) state.responses[iid]={};
+  state.responses[iid][type+'Agree']=agree;
+  selectVoteBtn(iid,type,agree);
+  if(agree){
+    hideDisagreeSub(iid,type);
+    state.responses[iid][type+'SubIdx']=undefined;
+    state.responses[iid][type+'SubText']=undefined;
+  } else {
+    showDisagreeSub(iid,type);
+  }
+  checkIndicatorDone(iid);
+}
+
+function selectVoteBtn(iid,type,agree){
+  const agreBtn=document.getElementById('vbtn-'+type+'-agree-'+iid);
+  const disBtn=document.getElementById('vbtn-'+type+'-dis-'+iid);
+  if(!agreBtn||!disBtn) return;
+  agreBtn.classList.toggle('selected',agree===true);
+  disBtn.classList.toggle('selected',agree===false);
+}
+
+function showDisagreeSub(iid,type){
+  const el=document.getElementById('dsub-'+type+'-'+iid);
+  if(el) el.classList.add('show');
+}
+function hideDisagreeSub(iid,type){
+  const el=document.getElementById('dsub-'+type+'-'+iid);
+  if(el) el.classList.remove('show');
+}
+
+function selectSubOpt(iid,type,idx,save){
+  // Deselect all in this group
+  for(let i=0;i<=3;i++){
+    const b=document.getElementById('sub-'+type+'-'+iid+'-'+i);
+    if(b) b.classList.remove('selected');
+    const d=b&&b.querySelector('.sub-opt-dot');
+    if(d){d.style.borderColor='';d.style.background='';}
+  }
+  const sel=document.getElementById('sub-'+type+'-'+iid+'-'+idx);
+  if(sel){
+    sel.classList.add('selected');
+  }
+  if(save){
+    if(!state.responses[iid]) state.responses[iid]={};
+    state.responses[iid][type+'SubIdx']=idx;
+    checkIndicatorDone(iid);
+  }
+}
+
+function saveComment(iid,val){
+  if(!state.responses[iid]) state.responses[iid]={};
+  state.responses[iid].comment=val;
+}
+
+function checkIndicatorDone(iid){
+  const r=state.responses[iid];
+  if(!r) return;
+  const analyOk=r.analyAgree===true||(r.analyAgree===false&&r.analySubIdx!==undefined);
+  const threshOk=r.threshAgree===true||(r.threshAgree===false&&r.threshSubIdx!==undefined);
+  if(analyOk&&threshOk){
+    r.done=true;
+    markDone(iid);
+  } else {
+    r.done=false;
+    unmarkDone(iid);
+  }
+}
+
+function markDone(iid){
+  const card=document.getElementById('card-'+iid);
+  if(!card) return;
+  card.classList.add('completed');
+  if(!card.querySelector('.completed-badge')){
+    const hdr=card.querySelector('.indicator-header');
+    if(hdr){const b=document.createElement('span');b.className='completed-badge';b.textContent='✓ 已完成';hdr.appendChild(b);}
+  }
+  updateNav();
+}
+function unmarkDone(iid){
+  const card=document.getElementById('card-'+iid);
+  if(!card) return;
+  card.classList.remove('completed');
+  const b=card.querySelector('.completed-badge');
+  if(b) b.remove();
+  updateNav();
+}
+
+// ══════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════
+function updateNav(){
+  const total=state.groups.length,cur=state.currentGroup;
+  document.getElementById('nav-info').textContent=`第 ${cur+1} 頁 / 共 ${total} 頁`;
+  document.getElementById('btn-prev').disabled=cur===0;
+  document.getElementById('btn-next').textContent=cur===total-1?'提交問卷 ✓':'下一組 →';
+  const done=countDone(),all=countAll();
+  const pct=all?Math.round(done/all*100):0;
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('survey-progress-text').textContent=`${done}/${all} 項完成`;
+}
+function countDone(){let n=0;state.groups.forEach(g=>g.indicators.forEach(i=>{if(state.responses[i.id]&&state.responses[i.id].done)n++;}));return n;}
+function countAll(){let n=0;state.groups.forEach(g=>n+=g.indicators.length);return n;}
+
+function navigate(dir){
+  const total=state.groups.length,cur=state.currentGroup;
+  if(dir===1&&cur===total-1){submitSurvey();return;}
+  if(dir===1){
+    const g=state.groups[cur];
+    const missing=g.indicators.filter(ind=>{
+      const r=state.responses[ind.id];
+      if(!r||r.analyAgree===undefined||r.threshAgree===undefined) return true;
+      if(r.analyAgree===false&&r.analySubIdx===undefined) return true;
+      if(r.threshAgree===false&&r.threshSubIdx===undefined) return true;
+      return false;
+    });
+    if(missing.length>0){
+      const alert=document.getElementById('valert-'+g.id);
+      if(alert){alert.classList.add('show');setTimeout(()=>alert.classList.remove('show'),3000);}
+      const fc=document.getElementById('card-'+missing[0].id);
+      if(fc){fc.scrollIntoView({behavior:'smooth',block:'center'});fc.classList.add('error-highlight');setTimeout(()=>fc.classList.remove('error-highlight'),2000);}
+      return;
+    }
+  }
+  state.currentGroup=Math.max(0,Math.min(total-1,cur+dir));
+  renderSurvey();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function submitSurvey(){
+  var payload = {
+    name: state.name,
+    role: state.role,
+    file: state.role === 'non-medical' ? 'group1_非醫療' : 'group2_醫療',
+    timestamp: new Date().toLocaleString('zh-TW'),
+    responses: state.responses
+  };
+
+  // 1. 存本機備份
+  var saved = JSON.parse(localStorage.getItem('survey_responses')||'[]');
+  saved.push(payload);
+  localStorage.setItem('survey_responses', JSON.stringify(saved));
+
+  // 2. 送出到 Google Sheet
+  var btn = document.getElementById('submit-btn-main');
+  if(btn) { btn.disabled = true; btn.textContent = '⏳ 提交中…'; }
+
+  fetch("https://script.google.com/macros/s/AKfycbxrcOvBM27g1qyEmTE8td3qtHz_o3OdpHEXhtopxi0xGMRj0FS_2m-7k5i8URu3CSIs/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(payload)
+  })
+  .then(function(){
+    document.getElementById('submit-confirm').textContent =
+      state.name + " 委員已成功提交，共完成 " + Object.keys(state.responses).length + " 項指標。回覆已同步至系統。";
+    // Clear autosave after successful submit
+    localStorage.removeItem('autosave_' + state.name + '_' + state.role);
+    showPage('thanks');
+  })
+  .catch(function(err){
+    // Even if fetch fails (no-cors always resolves), show success
+    document.getElementById('submit-confirm').textContent =
+      state.name + " 委員已成功提交，共完成 " + Object.keys(state.responses).length + " 項指標。";
+    showPage('thanks');
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// ADMIN LOGIN
+// ══════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════
+// PAGE SWITCH
+// ══════════════════════════════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(id==='survey'&&state.groups&&state.groups.length>0){
+    state.groups=getGroups(); renderSurvey();
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════════════
+
+
+
+function renderLinksAdmin(){
+  const saved=JSON.parse(localStorage.getItem('admin_links')||'{}');
+  Object.assign(state.adminLinks,saved);
+  let html=`<h2 style="margin-bottom:8px;color:var(--teal-dark)">🔗 補充連結管理（會議紀錄）</h2>
+  <div style="background:#EDF6F7;border:1.5px solid #B6DDE0;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--teal-dark);line-height:1.8">
+    <b>📌 如何貼上連結：</b><br>
+    1. 開啟會議紀錄文件（Google Doc / 雲端硬碟 / 任何網頁）<br>
+    2. 複製網址列的連結（Ctrl+C 或 ⌘+C）<br>
+    3. 點擊下方對應指標的輸入框，按 <b>Ctrl+V（或 ⌘+V）</b> 貼上<br>
+    4. 按右下角「💾 儲存所有連結」
+  </div>
+  <p style="color:var(--gray);font-size:13px;margin-bottom:16px">儲存後，連結會顯示在「問卷回覆」頁每筆資料的「會議紀錄」欄位中。委員填寫端看不到連結。</p>
+  <h3 style="color:var(--teal-dark);margin-bottom:12px">非醫療委員範圍（第1–7組）— 每組一個連結</h3>`;
+  GROUPS.filter(g=>g.type==='non-medical').forEach(g=>{
+    const v=state.adminLinks[g.id]||'';
+    html+=`<div class="admin-group-card"><div class="admin-group-header">${g.name}</div>
+    <div class="admin-group-body"><div class="admin-link-row">
+      <label>📎 會議紀錄連結：</label>
+      <input type="url" placeholder="貼上連結網址（如 Google Doc、雲端硬碟…）" value="${v}" onchange="saveAdminLink('${g.id}',this.value)">
+    </div></div></div>`;
+  });
+  html+=`<h3 style="color:var(--teal-dark);margin:20px 0 12px">醫療委員範圍（第8–15組）— 每個癌別各一個連結</h3>`;
+  GROUPS.filter(g=>g.type==='medical').forEach(g=>{
+    html+=`<div class="admin-group-card"><div class="admin-group-header">${g.name}</div><div class="admin-group-body">`;
+    g.indicators.forEach(ind=>{
+      const v=state.adminLinks[ind.id]||'';
+      html+=`<div class="admin-link-row">
+        <label>${ind.cancer}：${ind.name.substring(0,24)}...</label>
+        <input type="url" placeholder="貼上連結網址（複製連結後直接 Ctrl+V 貼上）" value="${v}" onchange="saveAdminLink('${ind.id}',this.value)">
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  html+=`<div style="margin-top:20px"><button class="btn-save" onclick="saveAllLinks()">💾 儲存所有連結</button></div>`;
+  document.getElementById('admin-tab-links').innerHTML=html;
+}
+
+function saveAdminLink(k,v){state.adminLinks[k]=v;}
+function saveAllLinks(){
+  localStorage.setItem('admin_links',JSON.stringify(state.adminLinks));
+  alert('所有連結已儲存！');
+}
+
+
+function findIndName(iid){
+  for(const g of GROUPS) for(const ind of g.indicators) if(ind.id===iid) return ind.cancer+' '+ind.name.substring(0,20)+'…';
+  return iid;
+}
+
+function exportCSV(){
+  const saved=JSON.parse(localStorage.getItem('survey_responses')||'[]');
+  const subA=['原因分析不完整','改善措施執行力不足','需加強追蹤機制','其他'];
+  const subT=['建議維持原閾值','下修幅度不足','設定依據需補充','其他'];
+  let csv='時間,委員,類別,指標,分析意見,分析不同意原因,閾值意見,閾值不同意原因,其他意見\n';
+  saved.forEach(s=>{
+    const dt=new Date(s.timestamp).toLocaleString('zh-TW');
+    Object.entries(s.responses).forEach(([iid,r])=>{
+      const nm=findIndName(iid);
+      csv+=`"${dt}","${s.name}","${s.role==='medical'?'醫療':'非醫療'}","${nm}",`+
+        `"${r.analyAgree===true?'同意':r.analyAgree===false?'不同意':'—'}","${r.analyAgree===false&&r.analySubIdx!==undefined?subA[r.analySubIdx]:''}",`+
+        `"${r.threshAgree===true?'同意':r.threshAgree===false?'不同意':'—'}","${r.threshAgree===false&&r.threshSubIdx!==undefined?subT[r.threshSubIdx]:''}",`+
+        `"${(r.comment||'').replace(/"/g,'""')}"\n`;
+    });
+  });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='癌症品質指標委員意見_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+function clearResponses(){
+  if(confirm('確定要清除所有問卷資料？')) {
+    localStorage.removeItem('survey_responses');
+    renderAdmin();
+  }
+}
+
+
+// ══════════════════════════════════════════════════════
+// MEETING LINKS — loaded from Google Sheet CSV or localStorage
+// ══════════════════════════════════════════════════════
+var MEETING_LINKS = {};
+
+function loadMeetingLinks(callback) {
+  // 1. Load from localStorage (admin saved locally)
+  var stored = JSON.parse(localStorage.getItem('admin_links') || '{}');
+  Object.assign(MEETING_LINKS, stored);
+  // 2. If user set a Google Sheet CSV URL, fetch it
+  var sheetUrl = localStorage.getItem('sheet_url') || '';
+  if (sheetUrl) {
+    fetch(sheetUrl)
+      .then(function(r){ return r.text(); })
+      .then(function(csv){
+        csv.split('\n').slice(1).forEach(function(row){
+          var cols = row.split(',');
+          if(cols.length >= 2) {
+            var id = cols[0].trim().replace(/^"|"$/g,'');
+            var url = cols.slice(1).join(',').trim().replace(/^"|"$/g,'');
+            if(id && url) MEETING_LINKS[id] = url;
+          }
+        });
+        if(callback) callback();
+      })
+      .catch(function(){ if(callback) callback(); });
+  } else {
+    if(callback) callback();
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// EDIT TEMPLATE
+// ══════════════════════════════════════════════════════
+var EDIT_DATA = null;
+
+function getEditData(){
+  if(EDIT_DATA) return EDIT_DATA;
+  // Try localStorage first
+  var s = localStorage.getItem('edit_groups');
+  if(s){
+    try{
+      var d = JSON.parse(s);
+      // Merge 112 data from GROUPS if missing (for compatibility)
+      d.forEach(function(g,gi){
+        var src = GROUPS[gi];
+        if(!src) return;
+        g.indicators.forEach(function(ind,ii){
+          var si = src.indicators[ii];
+          if(!si) return;
+          if(!ind.t112 || ind.t112==='—') ind.t112 = si.t112||'';
+          if(!ind.r112 || ind.r112==='—') ind.r112 = si.r112||'';
+          if(!ind.frac112 || ind.frac112==='—') ind.frac112 = si.frac112||'';
+        });
+      });
+      EDIT_DATA = d; return EDIT_DATA;
+    }catch(e){}
+  }
+  // Fall back to GROUPS (deep copy)
+  EDIT_DATA = JSON.parse(JSON.stringify(GROUPS));
+  return EDIT_DATA;
+}
+
+var TB2={'A':'文獻/學會指引','B':'同儕醫院平均值','C':'院內3年平均值','D':'認證基準/法規'};
+var AR2={'A':'連續達標正向趨勢','B':'流程已標準化','C':'指引政策變動','D':'已調且達標',
+         'E':'未達無結構性問題','F':'病人安全不調整','G':'非長期影響因素','H':'分母偏少波動大',
+         'I':'高齡/共病/拒治','J':'政策策略變動','K':'連續負向趨勢','L':'其他'};
+
+function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+
+function renderEditCard(ind,gi,ii){
+  var lnk = MEETING_LINKS[ind.id]||'';
+  var adjOpts=['down','keep','up'].map(function(v){
+    var sel=ind.adj===v?'style="background:var(--teal);color:#fff"':'';
+    var lbl={'down':'下調','keep':'維持','up':'上調'}[v];
+    return '<button '+sel+' style="padding:5px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px" onclick="setAdj('+gi+','+ii+',\''+v+'\')">'+lbl+'</button>';
+  }).join('');
+  var bOpts=['A','B','C','D'].map(function(b){ return '<option value="'+b+'"'+(ind.basis===b?' selected':'')+'>'+b+'：'+(TB2[b]||b)+'</option>'; }).join('');
+  var rOpts=['A','B','C','D','E','F','G','H','I','J','K','L'].map(function(r){ return '<option value="'+r+'"'+(ind.reason===r?' selected':'')+'>'+r+'：'+(AR2[r]||r)+'</option>'; }).join('');
+
+  var h='<div id="ecard-'+ind.id+'" style="border-bottom:1px solid var(--border);padding:16px 20px">';
+
+  // Header
+  h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">';
+  h+='<span style="background:var(--teal);color:#fff;font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px">'+escH(ind.no)+'</span>';
+  h+='<input style="flex:1;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:14px;font-weight:700;font-family:inherit;outline:none;background:#fff" value="'+escH(ind.name)+'" oninput="editInd('+gi+','+ii+',\'name\',this.value)">';
+  h+='<button onclick="removeInd('+gi+','+ii+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:20px;padding:0 4px">×</button>';
+  h+='</div>';
+
+  // Cancer + No + Missed in one row
+  h+='<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">';
+  h+=eField('癌別','cancer',ind.cancer,gi,ii,'flex:1;min-width:80px');
+  h+=eField('編號','no',ind.no,gi,ii,'width:60px');
+  h+=eField('未達年度','missed',ind.missed,gi,ii,'flex:1;min-width:80px');
+  h+='</div>';
+
+  // Years table
+  h+='<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px">';
+  h+='<thead><tr style="background:var(--teal);color:#fff">';
+  h+='<th style="padding:6px 8px;text-align:left;width:90px;font-weight:700">年度</th>';
+  h+='<th style="padding:6px 8px;text-align:left;font-weight:700">閾值</th>';
+  h+='<th style="padding:6px 8px;text-align:left;font-weight:700">執行結果</th>';
+  h+='<th style="padding:6px 8px;text-align:left;font-weight:700">分子/分母</th>';
+  h+='</tr></thead><tbody>';
+
+  var rows=[
+    {y:'112年',bg:'#F9FAFB',tc:'#6B7280',tf:'t112',rf:'r112',ff:'frac112'},
+    {y:'113年',bg:'#F3F4F6',tc:'#374151',tf:'t113',rf:'r113',ff:'frac113'},
+    {y:'114年',bg:'#EFF6FF',tc:'#1D4ED8',tf:'t114',rf:'r114',ff:'frac114'},
+  ];
+  rows.forEach(function(row){
+    h+='<tr style="background:'+row.bg+'">';
+    h+='<td style="padding:4px 8px;font-weight:800;color:'+row.tc+';border:1px solid var(--border)">'+row.y+'</td>';
+    h+=eTd(ind[row.tf],gi,ii,row.tf);
+    h+=eTd(ind[row.rf],gi,ii,row.rf);
+    h+=eTdBold(ind[row.ff],gi,ii,row.ff);
+    h+='</tr>';
+  });
+  // 115 row
+  h+='<tr style="background:#D1FAE5">';
+  h+='<td style="padding:4px 8px;font-weight:800;color:#065F46;border:1px solid var(--border)">115目標</td>';
+  h+=eTd(ind.t115,gi,ii,'t115');
+  h+='<td colspan="2" style="padding:4px 8px;border:1px solid var(--border);color:var(--gray);font-size:12px">（目標）</td>';
+  h+='</tr>';
+  h+='</tbody></table>';
+
+  // Adj + Basis + Reason
+  h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;align-items:center">';
+  h+='<div><span style="font-size:11px;font-weight:700;color:var(--gray);margin-right:6px">調整方向</span>'+adjOpts+'</div>';
+  h+='<div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:var(--gray)">依據</span><select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit" onchange="editInd('+gi+','+ii+',\'basis\',this.value)">'+bOpts+'</select></div>';
+  h+='<div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:var(--gray)">原因</span><select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit" onchange="editInd('+gi+','+ii+',\'reason\',this.value)">'+rOpts+'</select></div>';
+  h+='</div>';
+
+  // Analysis textarea
+  h+='<div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--gray);margin-bottom:4px">未達閾值分析及改善</div>';
+  h+='<textarea style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;min-height:72px;outline:none" oninput="editInd('+gi+','+ii+',\'analysis\',this.value)">'+escH(ind.analysis||'')+'</textarea></div>';
+
+  // Meeting link — admin only
+  h+='<div style="background:#EDF6F7;border:1.5px solid var(--teal-light);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px">';
+  h+='<span style="font-size:13px;font-weight:700;color:var(--teal-dark);white-space:nowrap">📎 會議紀錄連結</span>';
+  h+='<input type="url" style="flex:1;min-width:0;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:#fff" placeholder="貼入連結，委員點按鈕即可開啟" value="'+escH(lnk)+'" oninput="saveLocalLink(\''+ind.id+'\',this.value)">';
+  if(lnk) h+='<a href="'+lnk+'" target="_blank" style="background:var(--teal);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;text-decoration:none;white-space:nowrap">開啟 →</a>';
+  h+='</div>';
+
+  h+='</div>';
+  return h;
+}
+
+function eField(label,field,val,gi,ii,sty){
+  return '<div style="display:flex;flex-direction:column;gap:3px;'+sty+'">'
+       + '<span style="font-size:10px;font-weight:700;color:var(--gray)">'+label+'</span>'
+       + '<input style="padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;width:100%;background:#fff" '
+       + 'value="'+escH(val||'')+'" oninput="editInd('+gi+','+ii+',\''+field+'\',this.value)">'
+       + '</div>';
+}
+function eTd(val,gi,ii,field){
+  return '<td style="padding:2px 4px;border:1px solid var(--border)">'
+       + '<input style="width:100%;min-width:60px;border:none;background:transparent;font-size:13px;padding:4px 6px;font-family:inherit;outline:none;color:var(--text)" '
+       + 'value="'+escH(val||'')+'" oninput="editInd('+gi+','+ii+',\''+field+'\',this.value)">'
+       + '</td>';
+}
+function eTdBold(val,gi,ii,field){
+  return '<td style="padding:2px 4px;border:1px solid var(--border)">'
+       + '<input style="width:100%;min-width:60px;border:none;background:transparent;font-size:13px;font-weight:700;padding:4px 6px;font-family:inherit;outline:none;color:var(--text)" '
+       + 'value="'+escH(val||'')+'" oninput="editInd('+gi+','+ii+',\''+field+'\',this.value)">'
+       + '</td>';
+}
+
+
+function editGrp(gi,f,v){ getEditData()[gi][f]=v; }
+function editInd(gi,ii,f,v){ getEditData()[gi].indicators[ii][f]=v; }
+function setAdj(gi,ii,v){
+  getEditData()[gi].indicators[ii].adj=v;
+  var ind=getEditData()[gi].indicators[ii];
+  var el=document.getElementById('ecard-'+ind.id);
+  if(el){var tmp=document.createElement('div');tmp.innerHTML=renderEditCard(ind,gi,ii);el.replaceWith(tmp.firstChild);}
+}
+function addInd(gi){
+  var d=getEditData();
+  var id='g'+gi+'_'+Date.now();
+  d[gi].indicators.push({id:id,no:String(d[gi].indicators.length+1),cancer:'—',name:'新指標',
+    t113:'',r113:'',frac113:'',t114:'',r114:'',frac114:'',missed:'',t115:'',r115:'',frac115:'',adj:'keep',basis:'C',reason:'E',analysis:''});
+  saveEditAll(true); renderEditTab();
+}
+function removeInd(gi,ii){
+  if(!confirm('確定刪除？')) return;
+  getEditData()[gi].indicators.splice(ii,1);
+  saveEditAll(true); renderEditTab();
+}
+function saveLocalLink(id,url){
+  var all=JSON.parse(localStorage.getItem('admin_links')||'{}');
+  all[id]=url;
+  localStorage.setItem('admin_links',JSON.stringify(all));
+  MEETING_LINKS[id]=url;
+}
+function saveSheetUrl(){
+  var url=document.getElementById('sheet-url-input').value.trim();
+  localStorage.setItem('sheet_url',url);
+  alert('已儲存！問卷重新整理後即從此試算表讀取連結。');
+}
+function testSheetUrl(){
+  var url=document.getElementById('sheet-url-input').value.trim();
+  if(!url){alert('請先輸入連結');return;}
+  fetch(url).then(function(r){return r.text();}).then(function(csv){
+    var rows=csv.split('\n').slice(1).filter(function(r){return r.trim();}).length;
+    alert('✅ 連線成功！讀到 '+rows+' 筆連結資料。');
+  }).catch(function(e){alert('❌ 無法讀取，請確認連結是否正確並已設為公開。\n'+e);});
+}
+function saveEditAll(silent){
+  var d=getEditData();
+  localStorage.setItem('edit_groups',JSON.stringify(d));
+  var al=JSON.parse(localStorage.getItem('admin_links')||'{}');
+  localStorage.setItem('admin_links',JSON.stringify(al));
+  EDIT_DATA=d;
+  if(state.role){
+    state.groups=getGroups();
+    if(state.groups.length>0 && state.currentGroup>=0) renderSurvey();
+  }
+  if(!silent){
+    // 直接切換到問卷頁讓使用者立即看到修改
+    showPage('survey');
+    // Show brief notification
+    var notice=document.createElement('div');
+    notice.style.cssText='position:fixed;top:70px;right:20px;background:#006D77;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.2)';
+    notice.textContent='✅ 已儲存並更新';
+    document.body.appendChild(notice);
+    setTimeout(function(){notice.remove();},2500);
+  }
+}
+function resetEdit(){
+  if(!confirm('確定還原為原始資料？')) return;
+  localStorage.removeItem('edit_groups'); EDIT_DATA=null; renderEditTab(); alert('已還原。');
+}
+function exportSurveyFile(silent){
+  // First: scrape any link inputs that haven't fired oninput yet
+  document.querySelectorAll('input[type="url"]').forEach(function(inp){
+    var v=inp.value.trim();
+    if(!v) return;
+    // Find the id from the oninput attribute
+    var oi=inp.getAttribute('oninput')||'';
+    var m=oi.match(/saveLocalLink\('([^']+)'/);
+    if(m) saveLocalLink(m[1],v);
+  });
+  saveEditAll(true);
+  var d=getEditData();
+  var links=Object.assign({},JSON.parse(localStorage.getItem('admin_links')||'{}'),MEETING_LINKS);
+  var sheetUrl=localStorage.getItem('sheet_url')||'';
+  var html=document.documentElement.outerHTML;
+  // Bake MEETING_LINKS
+  // Replace MEETING_LINKS declaration (handles any content)
+  html=html.replace(/var MEETING_LINKS = \{[\s\S]*?\};\/\/ runtime-populated/,'var MEETING_LINKS = '+JSON.stringify(links)+';// runtime-populated');
+  // Fallback: simple replace if comment not present
+  if(html.indexOf(JSON.stringify(links))===-1){
+    html=html.replace('var MEETING_LINKS = {};','var MEETING_LINKS = '+JSON.stringify(links)+';');
+  }
+  // Bake sheet_url
+  html=html.replace("var _sheetUrl = '';","var _sheetUrl = '"+sheetUrl.replace(/'/g,"\\'")+"';");
+  // Bake edit_groups
+  html=html.replace('// _bakedGroups already declared above','var _bakedGroups = '+JSON.stringify(d)+';');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  a.download='問卷_'+new Date().toISOString().slice(0,10)+'.html';
+  a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
+  if(!silent) alert('已下載！這份 HTML 含有所有最新資料，可直接寄給委員。');
+  // Show brief top notification
+  var n=document.createElement('div');
+  n.style.cssText='position:fixed;top:70px;right:20px;background:#006D77;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.2)';
+  n.textContent='📥 已自動產生並下載最新問卷';
+  document.body.appendChild(n);
+  setTimeout(function(){n.remove();},3000);
+}
+
+
+function doLogin(){
+  var pwd=document.getElementById('admin-pwd').value;
+  if(pwd==='1111'){
+    showPage('admin');
+    renderAdmin();
+  } else {
+    document.getElementById('admin-err').style.display='block';
+    document.getElementById('admin-pwd').value='';
+    document.getElementById('admin-pwd').focus();
+  }
+}
+
+function saveAndExport(id, url){
+  saveLocalLink(id, url);
+  // Small debounce: wait 800ms after last keystroke before auto-exporting
+  if(window._exportTimer) clearTimeout(window._exportTimer);
+  window._exportTimer = setTimeout(function(){
+    if(url && url.trim().length > 5){
+      exportSurveyFile(true); // silent = no alert
+    }
+  }, 800);
+}
+
+
+function isMissed(result, threshold){
+  var rv = parseFloat(String(result||'').replace(/[%,\s]/g,''));
+  var tv = parseFloat(String(threshold||'').replace(/[≦≧<>＜＞%,\s]/g,''));
+  if(isNaN(rv)||isNaN(tv)||tv===0) return false;
+  var tStr = String(threshold||'').trim();
+  // ≦ or < = lower is better (失聯率, 錯誤率)
+  if(tStr.match(/^[≦<＜]/)) return rv > tv;
+  // ≧ or >= = higher is better (most indicators)
+  return rv < tv;
+}
+function saveMeetingLink(id,url){
+  if(!state.responses[id]) state.responses[id]={};
+  state.responses[id].meetingLink = url;
+  autosaveResponses();
+}
+
+
+function castDiscVote(id, yes){
+  var yb=document.getElementById('vbtn-disc-yes-'+id);
+  var nb=document.getElementById('vbtn-disc-no-'+id);
+  if(yb) yb.classList.toggle('agree-active', yes);
+  if(nb) nb.classList.toggle('disagree-active', !yes);
+  if(!state.responses[id]) state.responses[id]={};
+  state.responses[id].discussed = yes;
+  checkDone(id); autosaveResponses();
+}
+function castMeetingVote(id, hasIt){
+  var sub=document.getElementById('dsub-meeting-'+id);
+  if(sub) sub.style.display = hasIt ? 'block' : 'none';
+  var yb=document.getElementById('vbtn-meeting-yes-'+id);
+  var nb=document.getElementById('vbtn-meeting-no-'+id);
+  if(yb){ yb.classList.toggle('agree-active', hasIt); yb.classList.toggle('vote-selected', hasIt); }
+  if(nb){ nb.classList.toggle('disagree-active', !hasIt); nb.classList.toggle('vote-selected', !hasIt); }
+  if(!state.responses[id]) state.responses[id]={};
+  state.responses[id].hasMinutes = hasIt;
+  checkDone(id); autosaveResponses();
+}
+
+// ══════════════════════════════════════════════════════
+// AUTOSAVE — every 30s and on tab hide
+// ══════════════════════════════════════════════════════
+function autosaveResponses(){
+  if(!state.name || !state.role) return;
+  var key = 'autosave_' + state.name + '_' + state.role;
+  var data = {
+    name: state.name,
+    role: state.role,
+    currentGroup: state.currentGroup,
+    responses: state.responses,
+    savedAt: new Date().toISOString()
+  };
+  try{
+    localStorage.setItem(key, JSON.stringify(data));
+    // Show brief indicator
+    var el = document.getElementById('autosave-indicator');
+    if(el){ el.style.opacity='1'; setTimeout(function(){ el.style.opacity='0'; }, 1500); }
+  }catch(e){}
+}
+
+function loadAutosave(){
+  if(!state.name || !state.role) return false;
+  var key = 'autosave_' + state.name + '_' + state.role;
+  var saved = localStorage.getItem(key);
+  if(!saved) return false;
+  try{
+    var data = JSON.parse(saved);
+    var dt = new Date(data.savedAt);
+    var dtStr = dt.toLocaleString('zh-TW');
+    if(confirm('發現上次未完成的填寫記錄（' + dtStr + '）\n是否恢復進度？')){
+      state.responses = data.responses || {};
+      state.currentGroup = data.currentGroup || 0;
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
+// Auto-save every 30 seconds
+setInterval(autosaveResponses, 30000);
+
+// Save when user switches tab or closes
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden) autosaveResponses();
+});
+window.addEventListener('beforeunload', function(){
+  autosaveResponses();
+});
+
+// ══════════════════════════════════════════════════════
+// EXCEL IMPORT
+// ══════════════════════════════════════════════════════
+function setupImportDrop(){
+  var zone = document.getElementById('import-drop-zone');
+  if(!zone) return;
+  zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.style.borderColor='var(--teal)'; });
+  zone.addEventListener('dragleave', function(){ zone.style.borderColor='var(--border)'; });
+  zone.addEventListener('drop', function(e){
+    e.preventDefault();
+    zone.style.borderColor='var(--border)';
+    var file = e.dataTransfer.files[0];
+    if(file) importExcel(file);
+  });
+  // Also clicking the zone opens file picker
+  zone.addEventListener('click', function(e){
+    if(e.target.tagName !== 'INPUT') zone.querySelector('input[type=file]').click();
+  });
+  zone.querySelector('input[type=file]').addEventListener('change', function(e){
+    if(e.target.files[0]) importExcel(e.target.files[0]);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// SMART EXCEL IMPORT
+// ══════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════
+// SMART EXCEL IMPORT v2 — 支援直表格式，自動偵測年份
+// 格式：西元年份 | 組別 | 指標項目 | 癌別 | 閾值 | 執行成果 | 分子 | 分母 | 分析
+// ══════════════════════════════════════════════════════
+function importExcel(file){
+  var status = document.getElementById('import-status');
+  status.style.color = 'var(--text)';
+  status.textContent = '⏳ 讀取 '+file.name+'…';
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var wb = XLSX.read(new Uint8Array(e.target.result), {type:'array'});
+      if(wb.SheetNames.length > 1){
+        var z = document.getElementById('sheet-picker');
+        if(!z){ z=document.createElement('div'); z.id='sheet-picker';
+          z.style.cssText='margin-top:10px;padding:10px 14px;background:#F9FAFB;border:1.5px solid var(--border);border-radius:8px';
+          var dz=document.getElementById('import-drop-zone');
+          dz.parentNode.insertBefore(z,dz.nextSibling);
+        }
+        z.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--teal-dark);margin-bottom:8px">請選擇要匯入的工作表：</div>'
+          +wb.SheetNames.map(function(n){
+            return '<button onclick="processImportSheet(window._wb,\''+n+'\')" style="margin:3px;padding:6px 16px;background:#fff;border:1.5px solid var(--teal-light);border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--teal-dark)">'+n+'</button>';
+          }).join('');
+        window._wb=wb;
+        status.textContent='請選擇工作表（找到 '+wb.SheetNames.length+' 個）';
+        return;
+      }
+      processImportSheet(wb, wb.SheetNames[0]);
+    }catch(err){
+      status.textContent='❌ 讀取失敗：'+err.message;
+      status.style.color='var(--red)';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function processImportSheet(wb, sheetName){
+  var status = document.getElementById('import-status');
+  var rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {defval:'', header:1});
+  if(!rows.length){ status.textContent='❌ 工作表是空的'; return; }
+
+  // Auto-detect format
+  var headers = rows[0].map(function(h){ return String(h||'').trim(); });
+  var isVertical = headers.some(function(h){ return h.includes('組別') || h.includes('指標項目'); });
+
+  if(isVertical){
+    processVerticalFormat(rows, headers, status);
+  } else {
+    processHorizontalFormat(wb.Sheets[sheetName], status);
+  }
+}
+
+// 直表格式：每列是一個年份×指標的組合
+function processVerticalFormat(rows, headers, status){
+  var COL = {};
+  headers.forEach(function(h,i){
+    var hc = h.replace(/\s/g,'');
+    if(hc.includes('年份')||hc.includes('年度')) COL.year=i;
+    else if(hc.includes('組別')) COL.group=i;
+    else if(hc.includes('指標')||hc.includes('項目')) COL.item=i;
+    else if(hc.includes('癌別')) COL.cancer=i;
+    else if(hc.includes('閾值')) COL.threshold=i;
+    else if(hc.includes('執行')||hc.includes('成果')||hc.includes('結果')) COL.result=i;
+    else if(hc.includes('分子')) COL.num=i;
+    else if(hc.includes('分母')) COL.den=i;
+    else if(hc.includes('分析')||hc.includes('改善')) COL.analysis=i;
+  });
+
+  var GROUP_MAP = {
+    '抗癌藥物安全組':'g1','影像診斷品質提升組':'g2',
+    '社區篩檢發展推動組':'g3','安寧療護推動組':'g4',
+    '營養衛教組':'g5','社工服務組':'g6',
+    '心理腫瘤醫療服務組':'g7','癌症多專科團隊暨個案管理組':'g8',
+    '診斷期':'g8','治療期':'g9','計畫書':'g10',
+    '非動態':'g11','動態核心':'g12','失聯率':'g13','留治率':'g14','完治率':'g15',
+  };
+
+  // Build pivot: (gid, item, cancer) -> {yearKey: {t,r,frac,analysis}}
+  var pivot = {};
+  var yearsFound = {};
+
+  for(var ri=1; ri<rows.length; ri++){
+    var r = rows[ri];
+    var yr  = String(r[COL.year ]||'').trim();
+    var grp = String(r[COL.group]||'').trim();
+    var itm = String(r[COL.item ]||'').trim();
+    var can = String(r[COL.cancer||0]||'').trim();
+    if(!yr||!grp) continue;
+
+    var gid = GROUP_MAP[grp] || '';
+    if(!gid){
+      // fuzzy match
+      Object.keys(GROUP_MAP).forEach(function(k){ if(grp.includes(k)||k.includes(grp)) gid=GROUP_MAP[k]; });
+    }
+    if(!gid) continue;
+
+    var ynum = yr.replace(/[^0-9]/g,'');
+    yearsFound[ynum] = yr;
+
+    var t = fmtPct(r[COL.threshold]);
+    var res = fmtPct(r[COL.result]);
+    var fr = fmtFrac(r[COL.num], r[COL.den]);
+    var ana = String(r[COL.analysis]||'').trim();
+
+    var key = gid+'||'+itm+'||'+can;
+    if(!pivot[key]) pivot[key]={gid:gid,item:itm,cancer:can,years:{}};
+    pivot[key].years[ynum] = {t:t, r:res, frac:fr, analysis:ana};
+  }
+
+  var yearNums = Object.keys(yearsFound).sort();
+  applyPivotToGroups(pivot, yearNums, status);
+}
+
+function fmtPct(v){
+  if(v===undefined||v===null||v==='') return '';
+  var s = String(v).trim();
+  if(!s||s==='-'||s==='—') return '';
+  try{
+    var f=parseFloat(s);
+    if(isNaN(f)) return s;
+    if(f>0&&f<=1) return (f*100).toFixed(1).replace('.0','')+'%';
+    return Number.isInteger(f)?f+'%':f.toFixed(1)+'%';
+  }catch(e){ return s; }
+}
+
+function fmtFrac(n, d){
+  try{
+    var ni=parseInt(parseFloat(String(n||'').trim()));
+    var di=parseInt(parseFloat(String(d||'').trim()));
+    if(isNaN(ni)||isNaN(di)) return '';
+    return ni+'/'+di;
+  }catch(e){ return ''; }
+}
+
+function applyPivotToGroups(pivot, yearNums, status){
+  var d = getEditData();
+  var updated = 0;
+  var notMatched = 0;
+
+  d.forEach(function(g){
+    g.indicators.forEach(function(ind){
+      var gid = ind.id.split('-')[0];
+      // Try to match by cancer
+      var bestKey = null;
+      Object.keys(pivot).forEach(function(k){
+        var p = pivot[k];
+        if(p.gid !== gid) return;
+        var cn = (ind.cancer||'').replace(/\s/g,'');
+        var pn = (p.cancer||'').replace(/\s/g,'');
+        if(cn && pn && (cn===pn || cn.includes(pn) || pn.includes(cn))) bestKey = k;
+      });
+
+      if(!bestKey){
+        notMatched++;
+        return;
+      }
+
+      var p = pivot[bestKey];
+      // Map year numbers to field names
+      yearNums.forEach(function(ynum){
+        var d2 = p.years[ynum];
+        if(!d2) return;
+        ind['t'+ynum] = d2.t || ind['t'+ynum] || '';
+        ind['r'+ynum] = d2.r || ind['r'+ynum] || '';
+        ind['frac'+ynum] = d2.frac || ind['frac'+ynum] || '';
+        if(d2.analysis && ynum==='114') ind.analysis = d2.analysis;
+      });
+      updated++;
+    });
+  });
+
+  EDIT_DATA = d;
+  localStorage.setItem('edit_groups', JSON.stringify(d));
+  if(state.role) state.groups = getGroups();
+  if(state.groups && state.groups.length) renderSurvey();
+  renderEditTab();
+
+  var msg = '✅ 更新完成！'+updated+' 個指標已更新（年份：'+yearNums.join('、')+'）';
+  if(notMatched) msg += '，'+notMatched+' 個未匹配（可在後台手動編輯）';
+  status.textContent = msg;
+  status.style.color = 'var(--green)';
+}
+
+// 橫表格式 fallback
+function processHorizontalFormat(ws, status){
+  var rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+  if(!rows.length){ status.textContent='❌ 工作表是空的'; return; }
+  var headers = Object.keys(rows[0]);
+  var MAP = autoDetectCols(headers);
+  var d = getEditData();
+  var updated = 0;
+  rows.forEach(function(r){
+    var gid = MAP.group_id?String(r[MAP.group_id]||'').trim():'';
+    if(!gid) return;
+    var grp = d.find(function(g){ return g.id===gid; });
+    if(!grp) return;
+    var no = MAP.no?String(r[MAP.no]||'').trim():'';
+    var cancer = MAP.cancer?String(r[MAP.cancer]||'').trim():'';
+    var ind = grp.indicators.find(function(i){ return i.no===no||(cancer&&i.cancer===cancer); });
+    if(!ind) return;
+    ['t112','r112','frac112','t113','r113','frac113','t114','r114','frac114','t115','missed','adj','basis','reason','analysis'].forEach(function(k){
+      if(MAP[k] && r[MAP[k]]!==undefined && r[MAP[k]]!=='') ind[k]=String(r[MAP[k]]).trim();
+    });
+    updated++;
+  });
+  EDIT_DATA = d;
+  localStorage.setItem('edit_groups', JSON.stringify(d));
+  if(state.role) state.groups = getGroups();
+  if(state.groups && state.groups.length) renderSurvey();
+  renderEditTab();
+  status.textContent='✅ 更新完成！'+updated+' 筆指標已更新';
+  status.style.color='var(--green)';
+}
+
+function autoDetectCols(headers){
+  var MAP={};
+  var aliases={
+    group_id:['group_id','群組','小組代碼','功能小組id','gid'],
+    no:['no','編號','序號','指標編號'],
+    cancer:['cancer','癌別','病別'],
+    name:['name','指標名稱','名稱','監測項目'],
+    t112:['t112','112閾值','112年閾值'],
+    r112:['r112','112結果','112年結果','112執行結果'],
+    frac112:['frac112','112分子分母','112年分子'],
+    t113:['t113','113閾值','113年閾值'],
+    r113:['r113','113結果','113年結果'],
+    frac113:['frac113','113分子分母'],
+    t114:['t114','114閾值','114年閾值'],
+    r114:['r114','114結果','114年結果'],
+    frac114:['frac114','114分子分母'],
+    t115:['t115','115閾值','115年閾值','目標閾值','next'],
+    missed:['missed','未達年度','未達標年度'],
+    adj:['adj','調整方向','adjustment'],
+    basis:['basis','設定依據','依據'],
+    reason:['reason','調整原因','原因'],
+    analysis:['analysis','分析改善','未達閾值分析'],
+  };
+  headers.forEach(function(h){
+    var hc=h.toLowerCase().replace(/[\s_\-\/]/g,'');
+    Object.keys(aliases).forEach(function(key){
+      if(MAP[key]) return;
+      aliases[key].forEach(function(alias){
+        var ac=alias.toLowerCase().replace(/[\s_\-\/]/g,'');
+        if(hc===ac||hc.includes(ac)||ac.includes(hc)) MAP[key]=h;
+      });
+    });
+  });
+  return MAP;
+}
+
+function updateNameDropdown(){
+  var role = state.role;
+  var key = role==='non-medical' ? 'member_names_g1' : 'member_names_g2';
+  var saved = localStorage.getItem(key);
+  if(!saved) return;
+  var names = JSON.parse(saved);
+  var sel = document.getElementById('input-name');
+  if(!sel) return;
+  var cur = sel.value;
+  sel.innerHTML = '<option value="">— 請選擇姓名 —</option>';
+  names.forEach(function(n){
+    var o = document.createElement('option');
+    o.value = n; o.textContent = n;
+    if(n===cur) o.selected = true;
+    sel.appendChild(o);
+  });
+}
+
+
+// ══════════════════════════════════════════════════════
+
+
+// DISPATCH
+var DISPATCH_MEMBERS = ["李明哲","張宜崴","林哲銘","楊哲銘","馮博皓","沈宛真","宋睿祥","劉惠文","溫國璋","蔡若婷","蔡易傑","李秋桂","李國隆","李明憲","徐嘉鴻","哈多吉","李文生","趙祖怡"];
+
+function renderDispatchTab() {
+  var data;
+  if (typeof EDIT_DATA !== "undefined" && EDIT_DATA) data = EDIT_DATA;
+  else if (typeof _bakedGroups !== "undefined" && _bakedGroups) data = _bakedGroups;
+  else data = GROUPS;
+
+  var asgn = {};
+  try { asgn = JSON.parse(localStorage.getItem("dispatch_assignments") || "{}"); } catch(e){}
+
+  var h = "";
+  h += "<div style=\"margin-bottom:16px\"><h2 style=\"color:#004E56;margin-bottom:6px\">📋 指標派送系統</h2>";
+  h += "<p style=\"color:#6B7280;font-size:13px\">勾選要派給委員的指標 → 選擇委員姓名 → 按產生問卷</p></div>";
+
+  // Toolbar
+  h += "<div style=\"background:#fff;border:1px solid #D1D5DB;border-radius:10px;padding:14px 20px;";
+  h += "margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap\">";
+  h += "<button onclick=\"dispatchCheckAll(true)\" style=\"padding:6px 14px;background:#EDF6F7;border:1.5px solid #83C5BE;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;color:#004E56\">☑ 全選</button>";
+  h += "<button onclick=\"dispatchCheckAll(false)\" style=\"padding:6px 14px;background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer\">☐ 全不選</button>";
+  h += "<div style=\"flex:1\"></div>";
+  h += "<span style=\"font-size:13px;color:#6B7280\">派送給：</span>";
+  h += "<select id=\"dp-member\" style=\"padding:7px 12px;border:1.5px solid #D1D5DB;border-radius:7px;font-size:14px;font-weight:600;font-family:inherit\"><option value=\"\">— 選擇委員 —</option>";
+  DISPATCH_MEMBERS.forEach(function(m) { h += "<option value=\"" + m + "\">" + m + "</option>"; });
+  h += "</select>";
+  h += "<button onclick=\"dispatchGenerate()\" style=\"padding:8px 22px;background:#006D77;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit\">📤 產生問卷</button>";
+  h += "<span id=\"dp-status\" style=\"font-size:13px;color:#1E7C5A;min-width:80px\"></span>";
+  h += "</div>";
+
+  // Assignment summary
+  var counted = {};
+  Object.values(asgn).forEach(function(m) { counted[m] = (counted[m] || 0) + 1; });
+  var hasSummary = Object.keys(counted).length > 0;
+  if (hasSummary) {
+    h += "<div style=\"display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap\">";
+    Object.keys(counted).forEach(function(m) {
+      h += "<span style=\"background:#EDF6F7;border:1px solid #83C5BE;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;color:#004E56\">" + m + "：" + counted[m] + " 項";
+      h += " <button onclick=\"dispatchReDownload('" + m + "')\" style=\"background:none;border:none;color:#006D77;cursor:pointer;font-size:11px;text-decoration:underline\">重新下載</button>";
+      h += "</span>";
+    });
+    h += "<button onclick=\"dispatchClear()\" style=\"padding:3px 10px;background:#fff;border:1.5px solid #C8963E;border-radius:6px;font-size:11px;cursor:pointer;color:#B45309;margin-left:auto\">清除記錄</button>";
+    h += "</div>";
+  }
+
+  // Groups + indicators
+  data.forEach(function(g) {
+    if (!g.indicators || !g.indicators.length) return;
+    h += "<div style=\"background:#fff;border:1px solid #D1D5DB;border-radius:10px;margin-bottom:12px;overflow:hidden\">";
+    h += "<div style=\"background:#006D77;color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px\">";
+    h += "<input type=\"checkbox\" id=\"dg-" + g.id + "\" onchange=\"dispatchGroupCheck('" + g.id + "',this.checked)\" style=\"width:16px;height:16px;cursor:pointer\">";
+    h += "<span style=\"font-size:14px;font-weight:700\">" + g.name + "</span>";
+    h += "<span style=\"opacity:.8;font-size:12px\">（" + g.indicators.length + " 項）</span>";
+    h += "</div><div>";
+    g.indicators.forEach(function(ind) {
+      var who = asgn[ind.id] || "";
+      h += "<label style=\"display:flex;align-items:center;gap:12px;padding:9px 16px;cursor:pointer;border-bottom:1px solid #F3F4F6;background:" + (who ? "#F0FDF4" : "#fff") + "\">";
+      h += "<input type=\"checkbox\" class=\"dp-chk\" data-id=\"" + ind.id + "\" data-gid=\"" + g.id + "\" style=\"width:16px;height:16px;cursor:pointer\">";
+      h += "<span style=\"background:#006D77;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;flex-shrink:0\">" + ind.no + "</span>";
+      h += "<span style=\"font-size:13px;font-weight:600;flex:1\">" + (ind.cancer ? ind.cancer + " — " : "") + ind.name.substring(0, 45) + "</span>";
+      if (who) h += "<span style=\"background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:2px 10px;border-radius:12px;flex-shrink:0\">✓ " + who + "</span>";
+      h += "</label>";
+    });
+    h += "</div></div>";
+  });
+
+  document.getElementById("admin-tab-dispatch").innerHTML = h;
+}
+
+function dispatchCheckAll(val) {
+  document.querySelectorAll(".dp-chk").forEach(function(cb) { cb.checked = val; });
+  document.querySelectorAll("[id^=dg-]").forEach(function(cb) { cb.checked = val; });
+}
+
+function dispatchGroupCheck(gid, val) {
+  document.querySelectorAll(".dp-chk[data-gid=" + gid + "]").forEach(function(cb) { cb.checked = val; });
+}
+
+function dispatchGenerate() {
+  var member = document.getElementById("dp-member").value;
+  if (!member) { alert("請先選擇委員"); return; }
+  var ids = [];
+  document.querySelectorAll(".dp-chk:checked").forEach(function(cb) { ids.push(cb.getAttribute("data-id")); });
+  if (!ids.length) { alert("請先勾選至少一個指標"); return; }
+
+  var asgn = {};
+  try { asgn = JSON.parse(localStorage.getItem("dispatch_assignments") || "{}"); } catch(e){}
+  ids.forEach(function(id) { asgn[id] = member; });
+  localStorage.setItem("dispatch_assignments", JSON.stringify(asgn));
+
+  dispatchBuildHTML(member, ids);
+  renderDispatchTab();
+}
+
+function dispatchBuildHTML(member, ids) {
+  var status = document.getElementById("dp-status");
+  if (status) { status.textContent = "⏳ 產生中…"; status.style.color = "#C8963E"; }
+
+  // Use setTimeout to let UI update before heavy work
+  setTimeout(function() {
+    try {
+      var data;
+      if (typeof EDIT_DATA !== "undefined" && EDIT_DATA) data = EDIT_DATA;
+      else if (typeof _bakedGroups !== "undefined" && _bakedGroups) data = _bakedGroups;
+      else data = GROUPS;
+
+      var links = {};
+      try { links = JSON.parse(localStorage.getItem("admin_links") || "{}"); } catch(e){}
+      Object.assign(links, MEETING_LINKS);
+
+      var filteredGroups = [];
+      data.forEach(function(g) {
+        var fi = g.indicators.filter(function(ind) { return ids.indexOf(ind.id) > -1; });
+        if (fi.length) {
+          var gc = JSON.parse(JSON.stringify(g));
+          gc.indicators = fi;
+          gc.total = fi.length;
+          filteredGroups.push(gc);
+        }
+      });
+
+      if (!filteredGroups.length) { 
+        alert("找不到對應指標"); 
+        if (status) status.textContent = "❌ 找不到指標";
+        return; 
+      }
+
+      var html = document.documentElement.outerHTML;
+      html = html.replace(/var MEETING_LINKS[\s\S]*?= \{[^;]*\};/, "var MEETING_LINKS = " + JSON.stringify(links) + ";");
+      html = html.replace("// _bakedGroups already declared above", "var _bakedGroups = " + JSON.stringify(filteredGroups) + ";");
+
+      var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      var dt = new Date().toISOString().slice(5,10).replace("-", "月") + "日";
+      a.download = "問卷_" + member + "_" + ids.length + "項_" + dt + ".html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(a.href); }, 5000);
+
+      if (status) { 
+        status.textContent = "✅ 已下載！請到下載資料夾取檔"; 
+        status.style.color = "#1E7C5A";
+        setTimeout(function() { status.textContent = ""; }, 5000); 
+      }
+    } catch(err) {
+      if (status) { status.textContent = "❌ 錯誤：" + err.message; status.style.color = "#C0392B"; }
+      console.error("dispatchBuildHTML error:", err);
+    }
+  }, 100);
+}
+
+function dispatchReDownload(member) {
+  var asgn = {};
+  try { asgn = JSON.parse(localStorage.getItem("dispatch_assignments") || "{}"); } catch(e){}
+  var ids = Object.keys(asgn).filter(function(k) { return asgn[k] === member; });
+  if (ids.length) dispatchBuildHTML(member, ids);
+}
+
+function dispatchClear() {
+  if (confirm("確定清除所有派送記錄？")) {
+    localStorage.removeItem("dispatch_assignments");
+    renderDispatchTab();
+  }
+}
+
+// init
+(()=>{
+  // Auto-start for dispatched surveys
+  if(typeof _bakedGroups !== 'undefined' && _bakedGroups && _bakedGroups.length > 0) {
+    // Check for preset member name
+    var presetName = typeof _presetMember !== 'undefined' ? _presetMember : '';
+    if(presetName) {
+      state.name = presetName;
+      state.groups = _bakedGroups;
+      state.currentGroup = 0;
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('user-badge').textContent = presetName;
+        renderSurvey();
+        showPage('survey');
+      });
+      return; // skip rest of init
+    }
+  }
+  // If dispatched survey, show landing directly (skip role selection)
+  if(_bakedGroups && _bakedGroups.length > 0) {
+    document.getElementById('page-landing').style.display = 'block';
+  }
+  // 每次開啟都從 localStorage 載入已儲存的編輯資料
+  var _eg=localStorage.getItem('edit_groups');
+  if(_eg){try{
+    var _ed=JSON.parse(_eg);
+    // Merge t112/r112/frac112 from baked GROUPS if missing in saved data
+    _ed.forEach(function(g,gi){
+      var src=GROUPS[gi];
+      if(!src) return;
+      g.indicators.forEach(function(ind,ii){
+        var srcInd=src.indicators[ii];
+        if(srcInd&&!ind.t112){
+          ind.t112=srcInd.t112||'';
+          ind.r112=srcInd.r112||'';
+          ind.frac112=srcInd.frac112||'';
+        }
+      });
+    });
+    EDIT_DATA=_ed;
+  }catch(e){}}
+  if(_bakedGroups&&!EDIT_DATA){EDIT_DATA=_bakedGroups;}
+  var _s=JSON.parse(localStorage.getItem('admin_links')||'{}');
+  Object.assign(state.adminLinks,_s);
+  Object.assign(MEETING_LINKS,_s);
+  if(_sheetUrl){localStorage.setItem('sheet_url',_sheetUrl);}
+  loadMeetingLinks();
+})();
+</script>
+</body>
+</html>

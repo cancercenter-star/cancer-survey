@@ -265,11 +265,17 @@ function addMember(t){
   var name=inp.value.trim();
   if(!name){alert("請輸入姓名");return;}
   var ms=t==="nm"?MNM:MMED;
-  if(ms.indexOf(name)>-1){alert("已存在");return;}
+  if(ms.indexOf(name)>-1){alert("「"+name+"」已在名單中");return;}
   ms.push(name);
   localStorage.setItem("members_"+t,JSON.stringify(ms));
   inp.value="";
   renderMembers();buildSel();
+  // Show confirmation
+  var notice=document.createElement("div");
+  notice.style.cssText="position:fixed;top:20px;right:20px;background:#1E7C5A;color:#fff;padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.2)";
+  notice.textContent="✅ 已新增「"+name+"」── 下次派送問卷即生效";
+  document.body.appendChild(notice);
+  setTimeout(function(){notice.remove();},3000);
 }
 function removeMember(el){
   var t=el.getAttribute("data-t");
@@ -475,8 +481,18 @@ function mkHTML(member,ids){
       // Inject member name and filtered groups
       // Inject meeting links
       html=html.replace("var MEETING_LINKS = {};","var MEETING_LINKS = "+JSON.stringify(MEETING_LINKS)+";");
+      // Inject current member list into survey dropdown
+      var memberList = isNM ? MNM : MMED;
+      var newOpts = memberList.map(function(m){
+        return '<option value="'+m+'">'+m+'</option>';
+      }).join('\n          ');
+      html = html.replace(
+        /<option value="">— 請選擇姓名 —<\/option>[\s\S]*?<\/select>/,
+        '<option value="">— 請選擇姓名 —<\/option>\n          '+newOpts+'\n        <\/select>'
+      );
+
       html=html.replace("var _bakedGroups = null;",
-        "var _presetMember='"+member.replace(/'/g,"\\'")+"';var _bakedGroups = "+JSON.stringify(filtered)+";");
+        "var _presetMember='"+member.replace(/'/g,"\\\\'")+";var _bakedGroups = "+JSON.stringify(filtered)+";");
 
       // Download
       var blob=new Blob([html],{type:"text/html;charset=utf-8"});
@@ -621,13 +637,18 @@ function procSheet(wb,sn){
   }
 
   function fp(v){
-    var s=String(v||"").trim();if(!s||s==="-"||s==="—")return "";
-    if(s.indexOf("%")>-1)return s; // already formatted
-    try{var f=parseFloat(s);if(isNaN(f))return s;
-    if(f>=1000)return String(Math.round(f));
-    if(f>0&&f<1)return (f*100).toFixed(1).replace(".0","")+"%";
-    if(f>=1&&f<=100)return (Number.isInteger(f)?f:f.toFixed(1).replace(".0",""))+"%";
-    return String(Math.round(f));
+    var s=String(v||"").trim();
+    if(!s||s==="-"||s==="—"||s==="nan"||s==="null")return "";
+    if(s.match(/[%人次月季]/))return s; // already has unit
+    try{
+      var f=parseFloat(s);
+      if(isNaN(f))return s;
+      if(f<0)return s; // negative: return as-is
+      if(f>=10000)return String(Math.round(f)); // large count
+      if(f>100&&f<10000)return String(Math.round(f)); // medium count e.g. 2800
+      if(f>0&&f<1)return (f*100).toFixed(1).replace(".0","")+"%"; // decimal e.g. 0.96
+      if(f>=1&&f<=100)return (Number.isInteger(f)?f:parseFloat(f.toFixed(1)))+"%"; // percentage
+      return s;
     }catch(e){return s;}
   }
   function ff(n,d){

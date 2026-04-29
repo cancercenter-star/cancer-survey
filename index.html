@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>雙和醫院 癌症委員會品質指標審查系統</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;background:#F0F4F8;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.logo{text-align:center;margin-bottom:36px}
+.logo h1{font-size:22px;font-weight:800;color:#004E56;margin-bottom:6px}
+.logo p{font-size:13px;color:#6B7280}
+.cards{display:flex;flex-direction:column;gap:14px;width:100%;max-width:480px}
+.card{background:#fff;border-radius:14px;border:1px solid #D1D5DB;box-shadow:0 2px 8px rgba(0,0,0,.07);padding:22px 24px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:16px;transition:.2s}
+.card:hover{box-shadow:0 4px 16px rgba(0,109,119,.15);border-color:#83C5BE;transform:translateY(-1px)}
+.card-icon{font-size:32px;flex-shrink:0}
+.card-title{font-size:16px;font-weight:700;color:#004E56;margin-bottom:3px}
+.card-desc{font-size:12px;color:#6B7280}
+.card.admin{border-left:4px solid #C8963E}
+.card.nm{border-left:4px solid #006D77}
+.card.med{border-left:4px solid #1E7C5A}
+.footer{margin-top:32px;font-size:12px;color:#9CA3AF;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <h1>🏥 雙和醫院 癌症委員會</h1>
+  <p>114年品質指標執行成果審查 ｜ 115年閾值設定</p>
+</div>
+
+<div class="cards">
+  <a class="card admin" href="admin.html">
+    <div class="card-icon">⚙️</div>
+    <div>
+      <div class="card-title">管理後台</div>
+      <div class="card-desc">指標派送、委員管理、Excel 匯入（管理員專用）</div>
+    </div>
+  </a>
+  <a class="card nm" href="survey-nm.html">
+    <div class="card-icon">📋</div>
+    <div>
+      <div class="card-title">非醫療委員問卷</div>
+      <div class="card-desc">第1組 ｜ G1–G7 功能小組</div>
+    </div>
+  </a>
+  <a class="card med" href="survey-med.html">
+    <div class="card-icon">📋</div>
+    <div>
+      <div class="card-title">醫療委員問卷</div>
+      <div class="card-desc">第2組 ｜ G8–G15 功能小組</div>
+    </div>
+  </a>
+</div>
+
+<div class="footer">雙和醫院 癌症委員會 ｜ 115年度品質指標審查系統</div>
+
+</body>
+</html>
